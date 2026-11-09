@@ -9,6 +9,7 @@ An AI tool that drafts three on-brand Chinese WeChat messages (话术) for luxur
 ## Demo
 
 [![Demo: load a test case, generate three candidates, pick one, regenerate](submission/assets/demo.gif)](submission/assets/demo.mp4)
+
 https://github.com/user-attachments/assets/b1bd5707-230b-4cea-80a8-1e949c4d28b4
 
 28-second recording of the live app ([MP4](submission/assets/demo.mp4)): load test case S1-02, generate three candidate messages, choose one, then regenerate. The model's generation time is shortened: the middle of each wait is cut and the rest plays at 4×; other parts play at 1.5–3×.
