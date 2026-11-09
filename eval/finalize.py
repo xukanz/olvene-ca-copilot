@@ -1,5 +1,5 @@
 """Assemble the submitted results: base run + re-run cases → final.jsonl, then export
-section C (all 50 cases in the brief's columns, plus Version) as xlsx and Markdown.
+section C (all 50 cases in the brief's columns) as xlsx and Markdown.
 
   python -m eval.finalize v2 v2.1_partial
 """
@@ -64,7 +64,6 @@ def main() -> None:
                 "Output 1": f"【{cand[0]['angle']}】{cand[0]['text']}",
                 "Output 2": f"【{cand[1]['angle']}】{cand[1]['text']}",
                 "Output 3": f"【{cand[2]['angle']}】{cand[2]['text']}",
-                "Version": r["version"],
             }
         )
     df = pd.DataFrame(rows)
@@ -74,7 +73,7 @@ def main() -> None:
         from openpyxl.styles import Alignment
 
         ws = xw.book["C. 50 test cases"]
-        for col, w in zip("ABCDEFGHI", [8, 18, 34, 46, 26, 44, 44, 44, 8]):
+        for col, w in zip("ABCDEFGH", [8, 18, 34, 46, 26, 44, 44, 44]):
             ws.column_dimensions[col].width = w
         for row in ws.iter_rows():
             for cell in row:
@@ -82,8 +81,8 @@ def main() -> None:
         ws.freeze_panes = "B2"
 
     md = ["# C. 50 test cases", "",
-          "All outputs are unedited tool outputs. **Version** marks the tool version that produced them "
-          "(see the version legend in `SUBMISSION.md`). Same content as `C_test_cases.xlsx`.", "",
+          "All outputs are unedited outputs of the final tool (v2). Each output starts with its angle 【…】. "
+          "Same content as `C_test_cases.xlsx`.", "",
           "| " + " | ".join(df.columns) + " |", "|" + "---|" * len(df.columns)]
     for _, row in df.iterrows():
         md.append("| " + " | ".join(str(v).replace("|", "｜").replace("\n", "<br>") for v in row) + " |")

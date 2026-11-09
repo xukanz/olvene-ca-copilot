@@ -1,4 +1,4 @@
-"""Request / response models (the data contract, 方案规划 §3) and LLM output schemas."""
+"""Request / response models (the data contract, submission/B_methodology.md §B1) and LLM output schemas."""
 from __future__ import annotations
 
 from datetime import date
@@ -34,7 +34,7 @@ SCENARIO_ANGLES: dict[str, list[str]] = {
     "price_objection": ["价值说明", "替代方案", "留有余地"],
 }
 
-# Fallback angles when the client is upset or has clearly declined (方案规划 §4 ③ special branch).
+# Fallback angles when the client is upset or has clearly declined (care mode, submission/B_methodology.md §B1 step 2).
 CARE_ANGLES = ["先回应情绪", "解决问题", "留白与尊重"]
 
 

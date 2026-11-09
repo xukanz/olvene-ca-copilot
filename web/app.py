@@ -39,7 +39,16 @@ if REQUIRE_LOGIN and not st.user.get("is_logged_in"):
     st.button("使用 Google 登录", type="primary", on_click=st.login)
     st.page_link("pages/privacy.py", label="隐私说明 / Privacy")
     st.stop()
-USER = (st.user.get("email") or "unknown").lower() if REQUIRE_LOGIN else "local"
+if REQUIRE_LOGIN:
+    USER = (st.user.get("email") or "unknown").lower()
+else:
+    # No sign-in: count usage per browser session, so one visitor cannot use up everyone's share.
+    # The global daily cap still bounds total cost.
+    if "anon_id" not in st.session_state:
+        import uuid
+
+        st.session_state.anon_id = "anon-" + uuid.uuid4().hex[:12]
+    USER = st.session_state.anon_id
 
 brand = load_brand()
 

@@ -1,4 +1,4 @@
-"""Render fictional WeChat chat screenshots for test cases (方案规划 §7.3).
+"""Render fictional WeChat chat screenshots for test cases (submission/B_methodology.md §B2).
 
   python -m eval.render_wechat            # all cases with a `screenshot` block
   python -m eval.render_wechat S6-02      # selected cases

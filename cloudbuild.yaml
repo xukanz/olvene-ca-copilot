@@ -8,7 +8,8 @@ substitutions:
   _GEN_MODEL: gemini-3.1-pro-preview
   _FAST_MODEL: gemini-3-flash-preview
   _AUTH_SECRET: olvene-web-auth  # Secret Manager secret holding Streamlit's [auth] secrets.toml (Google OIDC)
-  _USER_DAILY_LIMIT: "20"        # LLM actions per Google account per day (Asia/Shanghai)
+  _REQUIRE_LOGIN: "0"            # 1 = Google sign-in required; 0 = open demo (reviewers must not need an account)
+  _USER_DAILY_LIMIT: "20"        # LLM actions per user per day (Google account, or browser session when login is off)
   _GLOBAL_DAILY_LIMIT: "200"     # LLM actions per day across all users
   _RESULTS_BUCKET: ${PROJECT_ID}-olvene-eval
 images:
@@ -42,7 +43,7 @@ steps:
         gcloud run deploy ${_WEB_SERVICE} --region ${_REGION} \
           --image ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/copilot:${BUILD_ID} \
           --service-account ${_SA}@${PROJECT_ID}.iam.gserviceaccount.com \
-          --set-env-vars ROLE=web,API_URL=$$API_URL,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},REQUIRE_LOGIN=1,QUOTA_BACKEND=firestore,USER_DAILY_LIMIT=${_USER_DAILY_LIMIT},GLOBAL_DAILY_LIMIT=${_GLOBAL_DAILY_LIMIT} \
+          --set-env-vars ROLE=web,API_URL=$$API_URL,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},REQUIRE_LOGIN=${_REQUIRE_LOGIN},QUOTA_BACKEND=firestore,USER_DAILY_LIMIT=${_USER_DAILY_LIMIT},GLOBAL_DAILY_LIMIT=${_GLOBAL_DAILY_LIMIT} \
           --set-secrets /app/.streamlit/secrets.toml=${_AUTH_SECRET}:latest \
           --max-instances 3 \
           --memory 1Gi --allow-unauthenticated

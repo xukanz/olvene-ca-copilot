@@ -1,4 +1,4 @@
-"""Brand knowledge loaded by key (no vector retrieval, 方案规划 §6)."""
+"""Brand knowledge loaded by key (no vector retrieval; see submission/B_methodology.md §B1)."""
 from __future__ import annotations
 
 import hashlib

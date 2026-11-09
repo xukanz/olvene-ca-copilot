@@ -1,4 +1,4 @@
-"""Human review vs. LLM judge (方案规划 §7.2: 15 sampled cases, ≥ 2 per scenario).
+"""Human review vs. LLM judge (15 sampled cases, ≥ 2 per scenario; submission/B_methodology.md §B3).
 
   python -m eval.human_review sample v1     # writes results/human_review_v1.xlsx to fill in by hand
   python -m eval.human_review agree v1      # after filling: agreement report vs. the judge
