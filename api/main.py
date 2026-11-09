@@ -17,7 +17,8 @@ logging.basicConfig(level=logging.INFO)
 app = FastAPI(title="Olvène CA Copilot API", version="1.0")
 
 
-@app.get("/healthz")
+@app.get("/health")
+@app.get("/healthz")  # local only: Cloud Run reserves paths ending in "z"
 def healthz() -> dict:
     s = get_settings()
     return {"ok": True, "llm_mode": s.llm_mode, "prompt_version": s.prompt_version}

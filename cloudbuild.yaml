@@ -25,7 +25,7 @@ steps:
     args: [run, deploy, huashu-api, --region, "${_REGION}",
            --image, "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/copilot:${BUILD_ID}",
            --service-account, "${_SA}@${PROJECT_ID}.iam.gserviceaccount.com",
-           --set-env-vars, "ROLE=api,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${_LLM_LOCATION},GEN_MODEL=${_GEN_MODEL},FAST_MODEL=${_FAST_MODEL}",
+           --set-env-vars, "ROLE=api,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${_LLM_LOCATION},GEN_MODEL=${_GEN_MODEL},FAST_MODEL=${_FAST_MODEL},JUDGE_MODEL=${_FAST_MODEL}",
            --memory, 1Gi, --timeout, "180", --no-allow-unauthenticated]
   - id: deploy-web
     name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
@@ -47,7 +47,7 @@ steps:
     args: [run, jobs, deploy, huashu-eval, --region, "${_REGION}",
            --image, "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/copilot:${BUILD_ID}",
            --service-account, "${_SA}@${PROJECT_ID}.iam.gserviceaccount.com",
-           --set-env-vars, "ROLE=eval,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${_LLM_LOCATION},GEN_MODEL=${_GEN_MODEL},FAST_MODEL=${_FAST_MODEL},RESULTS_DIR=/results",
+           --set-env-vars, "ROLE=eval,GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${_LLM_LOCATION},GEN_MODEL=${_GEN_MODEL},FAST_MODEL=${_FAST_MODEL},JUDGE_MODEL=${_FAST_MODEL},RESULTS_DIR=/results",
            --add-volume, "name=results,type=cloud-storage,bucket=${_RESULTS_BUCKET}",
            --add-volume-mount, "volume=results,mount-path=/results",
            --task-timeout, "3600", --memory, 2Gi, --max-retries, "0"]
