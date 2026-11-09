@@ -8,8 +8,10 @@
 | Repository | https://github.com/xukanz/olvene-ca-copilot |
 | Live demo | _TODO: Cloud Run URL_ (if it does not open from mainland China, please see the recording) |
 | Recording | _TODO: link_ |
-| Brand assumptions | [`brand/brand_guide.md`](brand/brand_guide.md) |
-| Full test results | _TODO: `results/test_cases.xlsx`_ |
+| Brand assumptions | [`brand/brand_guide.md`](../brand/brand_guide.md) |
+| Test set (inputs + chat screenshots) | [`test_set/`](../test_set/README.md) |
+| Architecture | _TODO: [`architecture.png`](architecture.png)_ |
+| Full test results | _TODO: [`C_test_cases.xlsx`](C_test_cases.xlsx)_ |
 
 **Version legend** (used in every results table)
 
@@ -34,7 +36,7 @@
 
 ## A. Work log
 
-Screenshots live in [`docs/screenshots/`](docs/screenshots/), named `stepNN_<topic>.png`.
+Screenshots live in [`assets/worklog/`](assets/worklog/), named `stepNN_<topic>.png`. Paths in this table are relative to the repository root.
 
 | Step | What you did | Input | Output | Tool or agent used | Screenshots |
 |---|---|---|---|---|---|
@@ -57,7 +59,7 @@ Screenshots live in [`docs/screenshots/`](docs/screenshots/), named `stepNN_<top
 
 ### B1. Tool design
 
-**Brand assumptions.** Summarised from [`brand/brand_guide.md`](brand/brand_guide.md) §0:
+**Brand assumptions.** Summarised from [`brand/brand_guide.md`](../brand/brand_guide.md) §0:
 - Maison Olvène 欧薇恩, a leather and silk house founded in Lyon in 1891; motto "慢一点，久一点"
 - Uniform national pricing, never discounted, no loyalty points
 - Clients segmented by relationship stage (初识 / 熟悉 / 挚交), never by spend
@@ -112,7 +114,7 @@ Screenshots live in [`docs/screenshots/`](docs/screenshots/), named `stepNN_<top
 
 **Conversation history as screenshots.** Each case keeps its history as structured text (ground truth) and as a WeChat-style screenshot rendered from it (`scripts/render_chats.js`). The tool takes the screenshot as input, as a CA would forward it; comparing its reading against the text measures screenshot parsing separately from message quality.
 
-**How cases were produced.** Drafted with Claude Code from the coverage matrix above, reviewed by hand, and validated automatically against the catalog (`scripts/build_test_set.py`). Full index: [`test_set/README.md`](test_set/README.md).
+**How cases were produced.** Drafted with Claude Code from the coverage matrix above, reviewed by hand, and validated automatically against the catalog (`scripts/build_test_set.py`). Full index: [`test_set/README.md`](../test_set/README.md).
 
 ### B3. Evaluation method
 
@@ -157,7 +159,7 @@ _TODO: quantitative targets, e.g. hard-fail rate 0%, mean rubric ≥ 4.0_
 
 ## C. 50 test cases
 
-Full table with all 50 cases: _TODO: `results/test_cases.xlsx`_. The **Version** column marks which tool version produced each output.
+Full table with all 50 cases: _TODO: [`C_test_cases.xlsx`](C_test_cases.xlsx)_. The **Version** column marks which tool version produced each output.
 
 Case ID format: `S<scenario>-<nn>`, e.g. `S6-03`.
 
@@ -193,7 +195,7 @@ Case ID format: `S<scenario>-<nn>`, e.g. `S6-03`.
 | S5 | | | | | | | |
 | S6 | | | | | | | |
 
-_TODO: chart + screenshots_
+_TODO: charts and screenshots in [`assets/evaluation/`](assets/evaluation/)_
 
 ### D3. Best and worst examples
 
