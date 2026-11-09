@@ -1,0 +1,8 @@
+.git
+.gitignore
+.venv/
+**/__pycache__/
+.pytest_cache/
+eval/results/
+*.pdf
+方案规划.md

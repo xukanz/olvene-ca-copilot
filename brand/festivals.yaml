@@ -1,0 +1,29 @@
+# 节日日期表（用于在上下文中提示"临近的节日"）。greet: false 表示不应发送问候。
+# note 对应 brand_guide.md §6 场景 1 的节日清单与注意事项。
+- {name: 元旦, date: 2026-01-01}
+- {name: 春节, date: 2026-02-17, note: 除夕为 02-16}
+- {name: 情人节, date: 2026-02-14}
+- {name: 元宵, date: 2026-03-03}
+- {name: 妇女节, date: 2026-03-08, note: 可选，措辞避免性别刻板印象}
+- {name: 清明, date: 2026-04-05, greet: false}
+- {name: 母亲节, date: 2026-05-10, note: 仅在客户档案提到时}
+- {name: 端午, date: 2026-06-19}
+- {name: 父亲节, date: 2026-06-21, note: 仅在客户档案提到时}
+- {name: 七夕, date: 2026-08-19}
+- {name: 中秋, date: 2026-09-25}
+- {name: 国庆, date: 2026-10-01, note: 仅简短}
+- {name: 平安夜, date: 2026-12-24}
+- {name: 圣诞, date: 2026-12-25}
+- {name: 元旦, date: 2027-01-01}
+- {name: 春节, date: 2027-02-06, note: 除夕为 02-05}
+- {name: 情人节, date: 2027-02-14}
+- {name: 元宵, date: 2027-02-20}
+- {name: 妇女节, date: 2027-03-08, note: 可选，措辞避免性别刻板印象}
+- {name: 清明, date: 2027-04-05, greet: false}
+- {name: 母亲节, date: 2027-05-09, note: 仅在客户档案提到时}
+- {name: 端午, date: 2027-06-09}
+- {name: 父亲节, date: 2027-06-20, note: 仅在客户档案提到时}
+- {name: 七夕, date: 2027-08-08}
+- {name: 中秋, date: 2027-09-15}
+- {name: 国庆, date: 2027-10-01, note: 仅简短}
+- {name: 圣诞, date: 2027-12-25}

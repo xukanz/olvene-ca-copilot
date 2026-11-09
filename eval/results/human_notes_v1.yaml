@@ -1,0 +1,13 @@
+# Human review notes on v1 outputs (2026-11-09). Used as a regression set for v2
+# and as evidence that the v1 judge missed these (all were scored >= 4 by judge j1).
+# output = candidate index (1-based); category maps to brand_guide v1.1 sections.
+- {case: S1-01, output: [1, 3], category: 刻意个性化, note: "“九月份和您聊过丝巾系法”“您那条墨绿色的经纬丝巾，现在这个季节用刚刚好”有点刻意"}
+- {case: S1-03, output: [2], category: 指手画脚, note: "“今天先放松一下，吃顿好的。”像在对客户指手画脚"}
+- {case: S1-04, output: [3], category: 指手画脚, note: "“出门别忘了带上您那条暮紫色的披肩”改成“出门注意保暖”更合适"}
+- {case: S1-06, output: [3], category: 刻意个性化, note: "“那只浅杏色索恩斜挎包平时若是留下轻微划痕，随时拿来店里我帮您做个基础护理”刻意"}
+- {case: S1-08, output: [1], category: 敏感情境, note: "“那条驼色披肩，一定陪伴了阿姨很多温暖时光”放在对家人去世的关怀里不合适"}
+- {case: S3-01, output: [2, 3], category: 缺少承接, note: "直接进入保养知识和搭配建议，缺少衔接，不够自然"}
+- {case: S3-05, output: [3], category: 对话节奏, note: "如果存在回复晚的问题（输出 1、2 提到了），应先为回复晚道歉或解释"}
+- {case: S4-01, output: [3], category: 刻意情节, note: "“今天在路上看到有人在手袋上系了一抹蓝色丝巾，一下子就想到了您”刻意"}
+- {case: S5-03, output: [2], category: 同伴不适合活动, note: "“您周末带儿子打完球要是顺路，不如一起来坐坐”带儿子来皮具活动不合适"}
+- {case: ALL, output: [], category: 称呼与节奏, note: "客户上一条消息是几天前的可以以称呼开头；正在对话中且前面已称呼过，再以称呼开头不自然"}

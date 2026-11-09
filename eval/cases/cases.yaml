@@ -1,0 +1,1443 @@
+# Maison Olvène 欧薇恩 · 50 个评测用例（全部虚构）
+# 产品 / 活动 / 价格只引用 brand/catalog.yaml。
+# 分布：S1 生日节日 8 · S2 产品推荐 9 · S3 售后关怀 8 · S4 沉睡唤醒 8 · S5 活动邀请 8 · S6 价格异议 9
+
+# ───────────────────────── S1 生日与节日问候 ─────────────────────────
+- id: S1-01
+  scenario: birthday_festive
+  title: 生日 · 熟悉 · 园艺爱好
+  tags: [生日, 熟悉, 信息丰富, 无对话]
+  client:
+    client_id: C001
+    name: 周女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 熟悉
+    purchases: [{product: 沙漏包 Sablier 中号 焦糖棕, date: "2025-03-14"}, {product: 经纬丝巾 90 墨绿, date: "2025-10-02"}]
+    preferences: [焦糖棕, 低调的设计]
+    important_dates: ["生日 11-10"]
+    notes: 喜欢园艺，今年想把院子里的月季扩种一片
+    comm_style: 简短
+    no_emoji: false
+    last_interaction: "2026-09-20 微信聊过丝巾系法"
+  dialog: []
+  product_ids: []
+  event_id: null
+  context: {today: "2026-11-10", occasion: 生日, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [推销产品, 提及年龄]
+
+- id: S1-02
+  scenario: birthday_festive
+  title: 生日恰逢元旦 · 初识 · 信息极少
+  tags: [生日, 元旦, 生日撞节日, 初识, 信息稀少]
+  client:
+    client_id: C002
+    name: 许女士
+    preferred_name: null
+    gender: F
+    city: 北京
+    relationship: 初识
+    purchases: [{product: 金丝卡包 黑色, date: "2026-08-03"}]
+    preferences: []
+    important_dates: ["生日 01-01"]
+    notes: null
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-08-03 到店购买"
+  dialog:
+    - {speaker: ca, time: "08-03 18:40", text: "许女士您好，我是今天在北京店为您服务的Vivian，卡包有任何问题随时找我。"}
+    - {speaker: client, time: "08-03 20:12", text: "好的，谢谢"}
+  product_ids: []
+  event_id: null
+  context: {today: "2026-12-31", occasion: 生日 + 元旦, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [推销产品, 生日与元旦祝福写成两条群发感, 编造客户细节]
+
+- id: S1-03
+  scenario: birthday_festive
+  title: 生日 · 男士 · 挚交 · 英文名
+  tags: [生日, 男士, 挚交, 英文称呼, 截图裁切]
+  client:
+    client_id: C003
+    name: 陈先生
+    preferred_name: David
+    gender: M
+    city: 上海
+    relationship: 挚交
+    purchases: [{product: 工坊公文包 深棕, date: "2023-05-10"}, {product: 旅程旅行袋 深棕/卡其, date: "2026-10-18"}]
+    preferences: [深棕色, 实用]
+    important_dates: ["生日 11-15"]
+    notes: 马拉松爱好者，11 月底要去跑杭州马拉松；常年出差
+    comm_style: 简短，偏好叫他 David
+    no_emoji: false
+    last_interaction: "2026-10-18 到店取旅行袋"
+  dialog:
+    - {speaker: client, time: "10-18 16:05", text: "包拿到了，下周去新加坡就用它"}
+    - {speaker: ca, time: "10-18 16:10", text: "David 一路顺利，帆布那面脏了用湿布擦一下就好。"}
+    - {speaker: client, time: "10-18 16:11", text: "[表情]", type: sticker}
+  screenshot: {style: cropped, client_display_name: David Chen}
+  product_ids: []
+  event_id: null
+  context: {today: "2026-11-15", occasion: 生日, ca_name: Leo}
+  expect:
+    must_address: []
+    must_not: [推销产品, 提及年龄]
+
+- id: S1-04
+  scenario: birthday_festive
+  title: 春节 · 挚交 · 中英夹杂
+  tags: [春节, 挚交, 中英夹杂, 多张截图]
+  client:
+    client_id: C004
+    name: 沈女士
+    preferred_name: Grace
+    gender: F
+    city: 杭州
+    relationship: 挚交
+    purchases: [{product: 沙漏包 Sablier 中号 黑色, date: "2022-12-20"}, {product: 经纬披肩 140 暮紫, date: "2025-11-30"}]
+    preferences: [黑色, 紫色系, 法式风格]
+    important_dates: ["生日 06-18"]
+    notes: 女儿在英国读书，春节会回国团聚；喜欢做饭
+    comm_style: 习惯中英夹杂，语气轻松
+    no_emoji: false
+    last_interaction: "2026-12-28 微信聊天"
+  dialog:
+    - {speaker: client, time: "12-28 21:02", text: "Vivian，我女儿 Chinese New Year 回来 two weeks"}
+    - {speaker: client, time: "12-28 21:03", text: "终于可以一起包饺子了哈哈"}
+    - {speaker: ca, time: "12-28 21:20", text: "太好了 Grace，一家人团聚最开心。"}
+    - {speaker: client, time: "12-28 21:22", text: "[图片]", type: image}
+    - {speaker: client, time: "12-28 21:22", text: "她小时候的照片 so cute"}
+  screenshot: {style: multi, client_display_name: Grace🌙}
+  product_ids: []
+  event_id: null
+  context: {today: "2027-02-05", occasion: 春节, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [推销产品, 新年促销]
+
+- id: S1-05
+  scenario: birthday_festive
+  title: 中秋 · 熟悉 · 群聊截图
+  tags: [中秋, 熟悉, 群聊截图, 截图干扰]
+  client:
+    client_id: C005
+    name: 黄女士
+    preferred_name: null
+    gender: F
+    city: 成都
+    relationship: 熟悉
+    purchases: [{product: 罗讷托特包 橄榄绿, date: "2026-03-08"}]
+    preferences: [橄榄绿, 通勤实用]
+    important_dates: []
+    notes: 在高校当老师；父母住在乐山，中秋常回去
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2027-08-20 在门店客户群里聊天"
+  dialog:
+    - {speaker: client, time: "08-20 12:30", text: "今年中秋终于不用监考了，可以回乐山陪爸妈"}
+    - {speaker: ca, time: "08-20 12:41", text: "黄老师辛苦啦，回家好好休息。"}
+    - {speaker: client, time: "08-20 12:42", text: "嗯嗯，我妈说要做她拿手的冬瓜烧肉"}
+  screenshot: {style: group_chat, client_display_name: 黄老师}
+  product_ids: []
+  event_id: null
+  context: {today: "2027-09-14", occasion: 中秋, ca_name: Amy}
+  expect:
+    must_address: []
+    must_not: [推销产品, 群发感]
+
+- id: S1-06
+  scenario: birthday_festive
+  title: 七夕 · 熟悉 · 不用表情
+  tags: [七夕, 熟悉, 不用表情, 文字对话]
+  client:
+    client_id: C006
+    name: 吴女士
+    preferred_name: null
+    gender: F
+    city: 北京
+    relationship: 熟悉
+    purchases: [{product: 索恩斜挎包 浅杏, date: "2026-02-14"}]
+    preferences: [浅色, 简约]
+    important_dates: ["结婚纪念日 05-20"]
+    notes: 斜挎包是先生送的情人节礼物；喜欢看话剧
+    comm_style: 不喜欢表情符号，偏好简短
+    no_emoji: true
+    last_interaction: "2027-07-02 微信"
+  dialog:
+    - {speaker: client, time: "07-02 19:15", text: "上次推荐的那部话剧看了，很不错"}
+    - {speaker: ca, time: "07-02 19:30", text: "太好了，您喜欢就好。"}
+  product_ids: []
+  event_id: null
+  context: {today: "2027-08-08", occasion: 七夕, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [推销产品, 使用表情, 评论婚姻感情]
+
+- id: S1-07
+  scenario: birthday_festive
+  title: 圣诞 · 初识 · 客户爱用表情
+  tags: [圣诞, 初识, 客户大量emoji]
+  client:
+    client_id: C007
+    name: 赵女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 初识
+    purchases: [{product: 经纬丝巾 90 珊瑚, date: "2026-11-20"}]
+    preferences: [亮色]
+    important_dates: []
+    notes: 第一次来店，说想学丝巾系在包上
+    comm_style: 活泼，常用表情
+    no_emoji: false
+    last_interaction: "2026-11-21 微信"
+  dialog:
+    - {speaker: client, time: "11-21 22:10", text: "丝巾好好看😍😍😍"}
+    - {speaker: client, time: "11-21 22:10", text: "朋友都问我哪买的🤣✨"}
+    - {speaker: ca, time: "11-21 22:30", text: "赵女士喜欢就好，想系在包上的话我随时可以给您发个小视频。"}
+    - {speaker: client, time: "11-21 22:31", text: "好呀好呀🥰🙏"}
+  screenshot: {style: emoji_heavy, client_display_name: 小赵🍊}
+  product_ids: []
+  event_id: null
+  context: {today: "2026-12-23", occasion: 圣诞, ca_name: Amy}
+  expect:
+    must_address: []
+    must_not: [推销产品, 超过1个表情, 模仿客户连发表情]
+
+- id: S1-08
+  scenario: birthday_festive
+  title: 生日 · 客户近期丧亲 · 须克制
+  tags: [生日, 熟悉, 负面情绪, 丧事, 截图模糊]
+  client:
+    client_id: C008
+    name: 刘女士
+    preferred_name: null
+    gender: F
+    city: 杭州
+    relationship: 熟悉
+    purchases: [{product: 经纬披肩 140 驼色, date: "2025-12-01"}]
+    preferences: [驼色]
+    important_dates: ["生日 11-22"]
+    notes: 披肩是买给母亲的
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-02 微信"
+  dialog:
+    - {speaker: ca, time: "11-02 10:15", text: "刘女士，杭州降温了，您和家人注意保暖。"}
+    - {speaker: client, time: "11-02 23:48", text: "谢谢。我妈妈上个月走了，最近状态不太好，不好意思回得晚"}
+  screenshot: {style: blurry, client_display_name: 刘}
+  product_ids: []
+  event_id: null
+  context: {today: "2026-11-22", occasion: 生日, ca_name: Leo}
+  expect:
+    must_address: [客户母亲去世、情绪低落]
+    must_not: [推销产品, 热烈欢快的生日语气, 表情符号, 提及披肩]
+
+# ───────────────────────── S2 产品推荐 ─────────────────────────
+- id: S2-01
+  scenario: product_recommendation
+  title: 基于过往购买 · 晚宴需要小包
+  tags: [产品推荐, 熟悉, 基于过往购买, 场合]
+  client:
+    client_id: C009
+    name: 林女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 熟悉
+    purchases: [{product: 沙漏包 Sablier 中号 黑色, date: "2024-09-12"}]
+    preferences: [黑色, 经典款]
+    important_dates: []
+    notes: 12 月要参加公司年会晚宴
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-05 微信"
+  dialog:
+    - {speaker: client, time: "11-05 20:21", text: "年会要穿礼服，我那只沙漏包有点大了"}
+    - {speaker: ca, time: "11-05 20:35", text: "明白，晚宴确实小一点的包更方便。我帮您留意一下。"}
+  screenshot: {style: normal, client_display_name: Lynn林}
+  product_ids: [P02]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: [晚宴需要小包]
+    must_not: [推荐多个产品, 编造颜色]
+
+- id: S2-02
+  scenario: product_recommendation
+  title: 男士送礼 · 给母亲 · 预算一万
+  tags: [产品推荐, 男士, 送礼, 未回答问题]
+  client:
+    client_id: C010
+    name: 王先生
+    preferred_name: null
+    gender: M
+    city: 北京
+    relationship: 初识
+    purchases: [{product: 经纬皮带, date: "2026-06-20"}]
+    preferences: []
+    important_dates: []
+    notes: 母亲下月过 60 大寿
+    comm_style: 简短
+    no_emoji: false
+    last_interaction: "2026-11-08 微信"
+  dialog:
+    - {speaker: client, time: "11-08 21:14", text: "你好，我想给我妈挑个生日礼物"}
+    - {speaker: client, time: "11-08 21:15", text: "预算一万左右，有什么推荐吗？"}
+  screenshot: {style: normal, client_display_name: 王}
+  product_ids: [P06]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Kevin}
+  expect:
+    must_address: [送母亲的礼物推荐, 预算一万左右]
+    must_not: [提及母亲年龄, 编造价格]
+
+- id: S2-03
+  scenario: product_recommendation
+  title: 男士 · 常出差 · 新到旅行袋
+  tags: [产品推荐, 男士, 生活方式, 无对话]
+  client:
+    client_id: C011
+    name: 郑先生
+    preferred_name: null
+    gender: M
+    city: 上海
+    relationship: 熟悉
+    purchases: [{product: 工坊公文包 黑色, date: "2025-04-02"}]
+    preferences: [黑色, 轻便]
+    important_dates: []
+    notes: 每月飞两三次，抱怨过行李箱托运太麻烦
+    comm_style: 简短，工作日白天不回消息
+    no_emoji: true
+    last_interaction: "2026-07-15 到店做公文包护理"
+  dialog: []
+  product_ids: [P10]
+  event_id: null
+  context: {today: "2026-11-12", occasion: null, ca_name: Leo}
+  expect:
+    must_address: []
+    must_not: [使用表情, 编造重量或尺寸数字]
+
+- id: S2-04
+  scenario: product_recommendation
+  title: 客户曾说暂时不需要
+  tags: [产品推荐, 熟悉, 客户婉拒过, 截图裁切]
+  client:
+    client_id: C012
+    name: 王女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 熟悉
+    purchases: [{product: 经纬丝巾 90 湖蓝, date: "2024-04-10"}]
+    preferences: [蓝色系, 丝巾]
+    important_dates: []
+    notes: 很喜欢湖蓝那条丝巾
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-10-12 微信"
+  dialog:
+    - {speaker: ca, time: "10-12 14:02", text: "王女士，秋冬新品到了，您有空来看看吗？"}
+    - {speaker: client, time: "10-12 18:30", text: "最近在装修房子，暂时不买东西了哈"}
+    - {speaker: ca, time: "10-12 18:35", text: "好的，装修辛苦，您忙您的。"}
+  screenshot: {style: cropped, client_display_name: 王王}
+  product_ids: [P05]
+  event_id: null
+  context: {today: "2026-11-20", occasion: null, ca_name: Amy}
+  expect:
+    must_address: [客户之前说暂时不买]
+    must_not: [强推, 要求到店, 无视装修话题]
+
+- id: S2-05
+  scenario: product_recommendation
+  title: 预算不匹配 · 降级推荐
+  tags: [产品推荐, 初识, 预算不匹配, 文字对话]
+  client:
+    client_id: C013
+    name: 孙女士
+    preferred_name: null
+    gender: F
+    city: 成都
+    relationship: 初识
+    purchases: []
+    preferences: [日常通勤, 轻便]
+    important_dates: []
+    notes: 第一次到店试背了沙漏包中号
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-06 到店"
+  dialog:
+    - {speaker: client, time: "11-06 21:40", text: "今天试的那只沙漏包真的很好看"}
+    - {speaker: client, time: "11-06 21:41", text: "不过超预算了，我想控制在三万以内"}
+    - {speaker: ca, time: "11-06 21:50", text: "理解的，我帮您想想有没有更合适的。"}
+  product_ids: [P04]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Amy}
+  expect:
+    must_address: [预算三万以内]
+    must_not: [暗示折扣, 劝客户超预算]
+
+- id: S2-06
+  scenario: product_recommendation
+  title: 男士 · 挚交 · 升职 · 英文名
+  tags: [产品推荐, 男士, 挚交, 英文称呼, 中英夹杂, 多张截图]
+  client:
+    client_id: C014
+    name: 李先生
+    preferred_name: Kevin
+    gender: M
+    city: 北京
+    relationship: 挚交
+    purchases: [{product: 旅程旅行袋 黑色/炭灰, date: "2026-10-25"}, {product: 金丝长款钱夹 黑色, date: "2024-02-10"}]
+    preferences: [黑色, 商务]
+    important_dates: []
+    notes: 刚升任合伙人，下个月开始常去客户公司开会
+    comm_style: 中英夹杂
+    no_emoji: false
+    last_interaction: "2026-11-03 微信"
+  dialog:
+    - {speaker: client, time: "11-03 22:01", text: "Promotion 下来了 😂"}
+    - {speaker: ca, time: "11-03 22:05", text: "恭喜 Kevin！实至名归。"}
+    - {speaker: client, time: "11-03 22:08", text: "以后要天天 meeting 了，电脑包得换个像样点的"}
+    - {speaker: client, time: "11-03 22:08", text: "[语音 6″]", type: voice, transcript: "最好黑色的，能放下十五寸电脑，低调一点别太张扬"}
+  screenshot: {style: multi, client_display_name: Kevin Li}
+  product_ids: [P09]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Kevin W}
+  expect:
+    must_address: [需要换电脑包]
+    must_not: [推荐多个产品]
+
+- id: S2-07
+  scenario: product_recommendation
+  title: 客户主动询问 · 有未回答问题
+  tags: [产品推荐, 熟悉, 未回答问题, 客户大量emoji]
+  client:
+    client_id: C015
+    name: 何女士
+    preferred_name: null
+    gender: F
+    city: 杭州
+    relationship: 熟悉
+    purchases: [{product: 索恩斜挎包 黑色, date: "2025-08-01"}]
+    preferences: [深色, 实用]
+    important_dates: []
+    notes: 设计师，经常背电脑见客户
+    comm_style: 爱用表情
+    no_emoji: false
+    last_interaction: "2026-11-08 微信"
+  dialog:
+    - {speaker: client, time: "11-08 13:02", text: "在吗👋"}
+    - {speaker: client, time: "11-08 13:03", text: "那个罗讷托特包能放14寸电脑吗💻"}
+    - {speaker: client, time: "11-08 13:03", text: "有没有海军蓝😳😳"}
+  screenshot: {style: emoji_heavy, client_display_name: 何何✏️}
+  product_ids: [P03]
+  event_id: null
+  context: {today: "2026-11-08", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: [能否放14寸电脑, 是否有海军蓝]
+    must_not: [答非所问, 编造库存]
+
+- id: S2-08
+  scenario: product_recommendation
+  title: 信息极少 · 入门礼物
+  tags: [产品推荐, 初识, 信息稀少, 无对话]
+  client:
+    client_id: C016
+    name: 杨先生
+    preferred_name: null
+    gender: M
+    city: 上海
+    relationship: 初识
+    purchases: []
+    preferences: []
+    important_dates: []
+    notes: 到店问过有没有适合送同事的小礼物
+    comm_style: null
+    no_emoji: false
+    last_interaction: null
+  dialog: []
+  product_ids: [P07]
+  event_id: null
+  context: {today: "2026-12-10", occasion: null, ca_name: Leo}
+  expect:
+    must_address: []
+    must_not: [编造客户需求细节, 过度亲昵]
+
+- id: S2-09
+  scenario: product_recommendation
+  title: 结婚十周年 · 定制 · 四川话
+  tags: [产品推荐, 挚交, 定制, 方言, 群聊截图]
+  client:
+    client_id: C017
+    name: 罗女士
+    preferred_name: null
+    gender: F
+    city: 成都
+    relationship: 挚交
+    purchases: [{product: 沙漏包 Sablier 中号 焦糖棕, date: "2021-05-01"}, {product: 经纬披肩 140 灰蓝, date: "2024-12-12"}]
+    preferences: [焦糖棕, 有纪念意义的东西]
+    important_dates: ["结婚纪念日 2027-05-01（十周年）"]
+    notes: 先生想送她一份十周年礼物，委托她自己挑
+    comm_style: 说话爱带四川话
+    no_emoji: false
+    last_interaction: "2026-11-01 客户群"
+  dialog:
+    - {speaker: client, time: "11-01 20:10", text: "明年五一我们结婚十年了，老公说让我自己挑个礼物"}
+    - {speaker: client, time: "11-01 20:11", text: "想要个巴适点、有纪念意义的，莫要撞款的那种"}
+    - {speaker: ca, time: "11-01 20:30", text: "恭喜罗女士，我想想给您一个好建议。"}
+  screenshot: {style: group_chat, client_display_name: 罗姐}
+  product_ids: [P12]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Amy}
+  expect:
+    must_address: [十周年礼物, 不想撞款]
+    must_not: [编造交期或价格, 承诺具体完成日期]
+
+# ───────────────────────── S3 售后关怀 ─────────────────────────
+- id: S3-01
+  scenario: post_purchase_care
+  title: 购买后 3 天 · 浅色迷你包
+  tags: [售后, 初识, 购买后3天, 文字对话]
+  client:
+    client_id: C018
+    name: 钱小姐
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 初识
+    purchases: [{product: 沙漏包 Sablier 迷你款 奶白, date: "2026-11-06"}]
+    preferences: [浅色]
+    important_dates: []
+    notes: 平时爱穿牛仔裤
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-06 到店购买"
+  dialog:
+    - {speaker: ca, time: "11-06 19:00", text: "钱小姐，今天谢谢您，包包有任何问题随时找我。"}
+    - {speaker: client, time: "11-06 19:30", text: "好的谢谢～"}
+  product_ids: [P02]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [推销新品, 制造焦虑, 评论穿着身材]
+
+- id: S3-02
+  scenario: post_purchase_care
+  title: 购买后 1 个月 · 问丝巾系法
+  tags: [售后, 熟悉, 购买后1个月, 未回答问题]
+  client:
+    client_id: C019
+    name: 蒋女士
+    preferred_name: null
+    gender: F
+    city: 北京
+    relationship: 熟悉
+    purchases: [{product: 经纬丝巾 90 雾霾蓝, date: "2026-10-08"}]
+    preferences: [蓝色系]
+    important_dates: []
+    notes: 常穿大衣
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-07 微信"
+  dialog:
+    - {speaker: client, time: "11-07 08:40", text: "丝巾买了一个月了只会最简单的系法"}
+    - {speaker: client, time: "11-07 08:41", text: "配大衣怎么系比较好看？"}
+  screenshot: {style: normal, client_display_name: Jiang}
+  product_ids: [P05]
+  event_id: null
+  context: {today: "2026-11-08", occasion: null, ca_name: Amy}
+  expect:
+    must_address: [配大衣怎么系]
+    must_not: [推销新品, 推荐披肩]
+
+- id: S3-03
+  scenario: post_purchase_care
+  title: 购买后 1 年 · 保养提醒
+  tags: [售后, 熟悉, 购买后1年, 无对话]
+  client:
+    client_id: C020
+    name: 冯女士
+    preferred_name: null
+    gender: F
+    city: 杭州
+    relationship: 熟悉
+    purchases: [{product: 沙漏包 Sablier 中号 雾灰, date: "2025-11-15"}]
+    preferences: [灰色]
+    important_dates: []
+    notes: 几乎每天背
+    comm_style: 简短
+    no_emoji: false
+    last_interaction: "2026-06-01 微信"
+  dialog: []
+  product_ids: [P01]
+  event_id: null
+  context: {today: "2026-11-15", occasion: null, ca_name: Leo}
+  expect:
+    must_address: []
+    must_not: [推销新品, 暗示包已损坏]
+
+- id: S3-04
+  scenario: post_purchase_care
+  title: 送礼购买 · 关心母亲反馈
+  tags: [售后, 男士, 送礼, 截图裁切]
+  client:
+    client_id: C021
+    name: 韩先生
+    preferred_name: null
+    gender: M
+    city: 成都
+    relationship: 初识
+    purchases: [{product: 经纬披肩 140 驼色, date: "2026-10-28"}]
+    preferences: []
+    important_dates: []
+    notes: 披肩是送给母亲的，母亲住在重庆
+    comm_style: 简短
+    no_emoji: false
+    last_interaction: "2026-10-28 到店"
+  dialog:
+    - {speaker: ca, time: "10-28 17:20", text: "韩先生，披肩已经包装好了，祝阿姨喜欢。"}
+    - {speaker: client, time: "10-28 17:25", text: "谢谢，周末寄回去"}
+  screenshot: {style: cropped, client_display_name: Han}
+  product_ids: [P06]
+  event_id: null
+  context: {today: "2026-11-10", occasion: null, ca_name: Amy}
+  expect:
+    must_address: []
+    must_not: [推销新品, 假设母亲已收到并喜欢]
+
+- id: S3-05
+  scenario: post_purchase_care
+  title: 客户投诉缝线 · 先处理问题
+  tags: [售后, 初识, 投诉, 负面情绪, 截图模糊]
+  client:
+    client_id: C022
+    name: 曹女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 初识
+    purchases: [{product: 金丝卡包 酒红, date: "2026-10-20"}]
+    preferences: []
+    important_dates: []
+    notes: null
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-07 微信"
+  dialog:
+    - {speaker: client, time: "11-07 22:15", text: "[图片]", type: image}
+    - {speaker: client, time: "11-07 22:15", text: "才用了半个多月，边上的金线就起毛了"}
+    - {speaker: client, time: "11-07 22:16", text: "这么贵的东西质量就这样？有点失望"}
+  screenshot: {style: blurry, client_display_name: 曹曹}
+  product_ids: [P07]
+  event_id: null
+  context: {today: "2026-11-08", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: [金线起毛的投诉, 客户失望情绪]
+    must_not: [推销新品, 推卸责任, 承诺免费维修或换新, 只给保养建议忽略投诉]
+
+- id: S3-06
+  scenario: post_purchase_care
+  title: 男士公文包 · 冬季保养
+  tags: [售后, 男士, 挚交, 保养提醒, 无对话]
+  client:
+    client_id: C023
+    name: 高先生
+    preferred_name: 高总
+    gender: M
+    city: 北京
+    relationship: 挚交
+    purchases: [{product: 工坊公文包 深棕, date: "2024-03-01"}, {product: 经纬皮带, date: "2025-09-10"}]
+    preferences: [深棕, 经典]
+    important_dates: []
+    notes: 喜欢皮具用出岁月感；北京冬天暖气足
+    comm_style: 简短，叫他高总
+    no_emoji: true
+    last_interaction: "2026-09-10 微信"
+  dialog: []
+  product_ids: [P09]
+  event_id: null
+  context: {today: "2026-11-25", occasion: null, ca_name: Kevin}
+  expect:
+    must_address: []
+    must_not: [推销新品, 使用表情, 推荐活动]
+
+- id: S3-07
+  scenario: post_purchase_care
+  title: 皮带太长 · 问能否调整
+  tags: [售后, 男士, 尺寸调整, 未回答问题, 文字对话]
+  client:
+    client_id: C024
+    name: 邓先生
+    preferred_name: null
+    gender: M
+    city: 杭州
+    relationship: 熟悉
+    purchases: [{product: 经纬皮带, date: "2026-11-01"}]
+    preferences: []
+    important_dates: []
+    notes: 最近在健身减重
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-08 微信"
+  dialog:
+    - {speaker: client, time: "11-08 21:30", text: "皮带最近系最里面一个孔都有点松了"}
+    - {speaker: client, time: "11-08 21:31", text: "能帮忙改短一点吗？要多久"}
+  product_ids: [P11]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Leo}
+  expect:
+    must_address: [能否改短, 需要多久]
+    must_not: [编造维修时效或费用, 评论身材体重, 推荐新皮带]
+
+- id: S3-08
+  scenario: post_purchase_care
+  title: 首次购买新客 · 不用表情 · 中英夹杂
+  tags: [售后, 初识, 首次购买, 不用表情, 中英夹杂, 多张截图]
+  client:
+    client_id: C025
+    name: 唐小姐
+    preferred_name: Iris
+    gender: F
+    city: 上海
+    relationship: 初识
+    purchases: [{product: 索恩斜挎包 浅杏, date: "2026-11-02"}]
+    preferences: [浅色]
+    important_dates: []
+    notes: 刚从纽约回国工作，第一次购买欧薇恩
+    comm_style: 不喜欢表情，中英夹杂
+    no_emoji: true
+    last_interaction: "2026-11-04 微信"
+  dialog:
+    - {speaker: client, time: "11-04 09:12", text: "bag 收到了，很 nice"}
+    - {speaker: client, time: "11-04 09:13", text: "周末去 Anfu Road 背了一天"}
+    - {speaker: ca, time: "11-04 10:00", text: "Iris 喜欢就好。"}
+    - {speaker: client, time: "11-04 10:02", text: "就是有点担心浅色容易脏"}
+  screenshot: {style: multi, client_display_name: Iris T.}
+  product_ids: [P04]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: [担心浅色容易脏]
+    must_not: [使用表情, 推销新品]
+
+# ───────────────────────── S4 沉睡客唤醒 ─────────────────────────
+- id: S4-01
+  scenario: reactivation
+  title: 1 年未联系 · 湖蓝丝巾 → 雾霾蓝
+  tags: [唤醒, 熟悉, 1年未联系, 无对话]
+  client:
+    client_id: C026
+    name: 王女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 熟悉
+    purchases: [{product: 经纬丝巾 90 湖蓝, date: "2025-06-10"}]
+    preferences: [蓝色系, 丝巾]
+    important_dates: []
+    notes: 以前常把丝巾系在包上
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2025-10-30 微信"
+  dialog: []
+  product_ids: [P05]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [提及多久没来, 要求到店]
+
+- id: S4-02
+  scenario: reactivation
+  title: 2 年未联系 · 以保养为由头
+  tags: [唤醒, 熟悉, 2年未联系, 服务提醒, 文字对话]
+  client:
+    client_id: C027
+    name: 谢女士
+    preferred_name: null
+    gender: F
+    city: 北京
+    relationship: 熟悉
+    purchases: [{product: 沙漏包 Sablier 中号 酒红, date: "2023-12-05"}]
+    preferences: [酒红]
+    important_dates: []
+    notes: 酒红色是等了预订的，当时很开心
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2024-10-15 微信"
+  dialog:
+    - {speaker: client, time: "2024-10-15 20:00", text: "包包背了快一年了，还是很喜欢"}
+    - {speaker: ca, time: "2024-10-15 20:10", text: "太好了，以后需要保养随时找我。"}
+  product_ids: [P01]
+  event_id: null
+  context: {today: "2026-11-18", occasion: null, ca_name: Kevin}
+  expect:
+    must_address: []
+    must_not: [提及多久没来, 暗示包已经旧了需要换]
+
+- id: S4-03
+  scenario: reactivation
+  title: 3 年未联系 · 初识 · 需自我介绍
+  tags: [唤醒, 初识, 3年未联系, 信息稀少, 无对话]
+  client:
+    client_id: C028
+    name: 朱先生
+    preferred_name: null
+    gender: M
+    city: 成都
+    relationship: 初识
+    purchases: [{product: 金丝长款钱夹 焦糖棕, date: "2023-09-20"}]
+    preferences: []
+    important_dates: []
+    notes: null
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2023-09-20 到店购买"
+  dialog: []
+  product_ids: []
+  event_id: null
+  context: {today: "2026-11-10", occasion: null, ca_name: Amy}
+  expect:
+    must_address: []
+    must_not: [提及多久没来, 编造客户细节, 要求到店]
+
+- id: S4-04
+  scenario: reactivation
+  title: 上次体验不佳 · 预订等待太久
+  tags: [唤醒, 熟悉, 负面历史, 文字对话]
+  client:
+    client_id: C029
+    name: 秦女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 熟悉
+    purchases: [{product: 沙漏包 Sablier 中号 酒红, date: "2025-07-28"}, {product: 经纬丝巾 90 珊瑚, date: "2024-05-01"}]
+    preferences: [酒红, 亮色]
+    important_dates: []
+    notes: 酒红色预订时到货比说好的晚了两周
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2025-07-28 到店取包"
+  dialog:
+    - {speaker: client, time: "07-20 19:00", text: "说好六周，现在都八周了，还要等多久？"}
+    - {speaker: ca, time: "07-20 19:15", text: "非常抱歉秦女士，我马上跟工坊确认。"}
+    - {speaker: client, time: "07-20 19:20", text: "说实话体验挺差的"}
+  product_ids: []
+  event_id: null
+  context: {today: "2026-11-12", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: [上次等待过久的不愉快]
+    must_not: [假装无事发生, 提及多久没来, 推新品]
+
+- id: S4-05
+  scenario: reactivation
+  title: 已迁居其他城市
+  tags: [唤醒, 熟悉, 迁居, 截图裁切]
+  client:
+    client_id: C030
+    name: 范女士
+    preferred_name: null
+    gender: F
+    city: 成都
+    relationship: 熟悉
+    purchases: [{product: 罗讷托特包 深海军蓝, date: "2024-08-18"}]
+    preferences: [深色, 通勤]
+    important_dates: []
+    notes: 原在上海店购买，2025 年初搬去成都工作
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2025-02-10 微信"
+  dialog:
+    - {speaker: client, time: "02-10 18:22", text: "Vivian 我下个月要调去成都了"}
+    - {speaker: client, time: "02-10 18:23", text: "以后可能不常来上海店了"}
+    - {speaker: ca, time: "02-10 18:40", text: "恭喜范女士新的开始，一切顺利。"}
+  screenshot: {style: cropped, client_display_name: Fan范}
+  product_ids: []
+  event_id: null
+  context: {today: "2026-11-15", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [提及多久没来, 要求回上海店]
+
+- id: S4-06
+  scenario: reactivation
+  title: 对话为空 · 档案丰富
+  tags: [唤醒, 熟悉, 无对话, 信息丰富]
+  client:
+    client_id: C031
+    name: 许先生
+    preferred_name: null
+    gender: M
+    city: 杭州
+    relationship: 熟悉
+    purchases: [{product: 工坊公文包 黑色, date: "2024-01-15"}, {product: 金丝卡包 森林绿, date: "2024-01-15"}]
+    preferences: [黑色, 绿色点缀]
+    important_dates: []
+    notes: 喜欢钓鱼和喝龙井；卡包是买给自己的第一件绿色物件
+    comm_style: 简短
+    no_emoji: true
+    last_interaction: "2025-03-01 到店"
+  dialog: []
+  product_ids: []
+  event_id: null
+  context: {today: "2026-11-20", occasion: null, ca_name: Leo}
+  expect:
+    must_address: []
+    must_not: [使用表情, 提及多久没来]
+
+- id: S4-07
+  scenario: reactivation
+  title: 上次已读不回
+  tags: [唤醒, 初识, 已读不回]
+  client:
+    client_id: C032
+    name: 马女士
+    preferred_name: null
+    gender: F
+    city: 北京
+    relationship: 初识
+    purchases: [{product: 经纬丝巾 90 墨绿, date: "2025-04-01"}]
+    preferences: []
+    important_dates: []
+    notes: null
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-05-10 CA 发消息未获回复"
+  dialog:
+    - {speaker: ca, time: "05-10 11:00", text: "马女士，春夏新品到了，有您喜欢的绿色系，有空来看看？"}
+  screenshot: {style: normal, client_display_name: Ma}
+  product_ids: []
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Kevin}
+  expect:
+    must_address: []
+    must_not: [追问为什么不回, 再次推新品, 要求到店]
+
+- id: S4-08
+  scenario: reactivation
+  title: 曾经的挚交 · 沉默 18 个月
+  tags: [唤醒, 挚交, 关系降温, 英文称呼, 多张截图]
+  client:
+    client_id: C033
+    name: 苏女士
+    preferred_name: Coco
+    gender: F
+    city: 上海
+    relationship: 挚交
+    purchases: [{product: 沙漏包 Sablier 中号 黑色, date: "2021-03-08"}, {product: 定制手袋, date: "2023-06-01"}, {product: 经纬披肩 140 灰蓝, date: "2024-12-20"}]
+    preferences: [黑色, 定制, 法式]
+    important_dates: ["生日 03-08"]
+    notes: 2025 年开始常住大理，喜欢画画
+    comm_style: 叫她 Coco
+    no_emoji: false
+    last_interaction: "2025-05-02 微信"
+  dialog:
+    - {speaker: client, time: "05-02 16:00", text: "[图片]", type: image}
+    - {speaker: client, time: "05-02 16:00", text: "大理的院子，开始画画了"}
+    - {speaker: ca, time: "05-02 16:30", text: "Coco 好美，羡慕您的生活。"}
+    - {speaker: client, time: "05-02 16:31", text: "哈哈有空来玩"}
+  screenshot: {style: multi, client_display_name: Coco苏}
+  product_ids: []
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [提及消费或定制金额, 提及多久没联系, 要求到店]
+
+# ───────────────────────── S5 活动邀请 ─────────────────────────
+- id: S5-01
+  scenario: event_invitation
+  title: 里昂丝织工艺展 · 丝巾爱好者
+  tags: [活动邀请, 熟悉, E01, 兴趣匹配]
+  client:
+    client_id: C034
+    name: 叶女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 熟悉
+    purchases: [{product: 经纬丝巾 90 湖蓝, date: "2025-05-05"}, {product: 经纬丝巾 90 珊瑚, date: "2026-03-01"}]
+    preferences: [丝巾, 手工艺]
+    important_dates: []
+    notes: 问过丝巾的图案是怎么印上去的
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-10-20 微信"
+  dialog:
+    - {speaker: client, time: "10-20 21:00", text: "这些颜色是一层层印上去的吗？好神奇"}
+    - {speaker: ca, time: "10-20 21:10", text: "是的，每种颜色单独套版，有机会带您看看。"}
+  screenshot: {style: normal, client_display_name: 叶子}
+  product_ids: []
+  event_id: E01
+  context: {today: "2026-11-10", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [编造活动时间地点, 制造紧迫感]
+
+- id: S5-02
+  scenario: event_invitation
+  title: 下午茶沙龙 · 客户想带闺蜜（不可携伴）
+  tags: [活动邀请, 熟悉, E02, 不可携伴, 未回答问题]
+  client:
+    client_id: C035
+    name: 田女士
+    preferred_name: null
+    gender: F
+    city: 北京
+    relationship: 熟悉
+    purchases: [{product: 经纬披肩 140 暮紫, date: "2025-12-01"}]
+    preferences: [披肩, 下午茶]
+    important_dates: []
+    notes: 冬天常戴披肩但只会一种披法
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-08 微信"
+  dialog:
+    - {speaker: ca, time: "11-08 15:00", text: "田女士，12 月我们有个丝巾系法下午茶，想先问问您有没有兴趣。"}
+    - {speaker: client, time: "11-08 18:20", text: "有兴趣！能带我闺蜜一起吗？她也很喜欢你们家"}
+  screenshot: {style: normal, client_display_name: 田田}
+  product_ids: []
+  event_id: E02
+  context: {today: "2026-11-09", occasion: null, ca_name: Kevin}
+  expect:
+    must_address: [能否带闺蜜]
+    must_not: [答应可以携伴, 编造例外, 无视问题]
+
+- id: S5-03
+  scenario: event_invitation
+  title: 男士保养工作坊 · 可携伴
+  tags: [活动邀请, 男士, E03, 无对话]
+  client:
+    client_id: C036
+    name: 蔡先生
+    preferred_name: null
+    gender: M
+    city: 杭州
+    relationship: 熟悉
+    purchases: [{product: 工坊公文包 黑色, date: "2025-02-20"}, {product: 经纬皮带, date: "2025-02-20"}]
+    preferences: [黑色]
+    important_dates: []
+    notes: 周末常带儿子去打球；对皮具怎么养很好奇
+    comm_style: 简短
+    no_emoji: false
+    last_interaction: "2026-08-12 微信"
+  dialog: []
+  product_ids: []
+  event_id: E03
+  context: {today: "2026-11-20", occasion: null, ca_name: Leo}
+  expect:
+    must_address: []
+    must_not: [编造活动信息, 推销产品]
+
+- id: S5-04
+  scenario: event_invitation
+  title: 2027 春夏私人预览 · 成都挚交
+  tags: [活动邀请, 挚交, E04, 多张截图]
+  client:
+    client_id: C037
+    name: 卢女士
+    preferred_name: Vicky
+    gender: F
+    city: 成都
+    relationship: 挚交
+    purchases: [{product: 沙漏包 Sablier 中号 焦糖棕, date: "2022-04-10"}, {product: 沙漏包 Sablier 迷你款 奶白, date: "2025-09-10"}]
+    preferences: [焦糖棕, 奶白, 新系列]
+    important_dates: []
+    notes: 喜欢第一时间看新系列；一月份比较空
+    comm_style: 叫她 Vicky
+    no_emoji: false
+    last_interaction: "2026-11-01 微信"
+  dialog:
+    - {speaker: client, time: "11-01 20:00", text: "明年春夏有新包吗？"}
+    - {speaker: ca, time: "11-01 20:05", text: "有的 Vicky，具体安排定了第一时间告诉您。"}
+    - {speaker: client, time: "11-01 20:06", text: "好，一月我基本都在成都"}
+  screenshot: {style: multi, client_display_name: Vicky卢}
+  product_ids: []
+  event_id: E04
+  context: {today: "2026-11-25", occasion: null, ca_name: Amy}
+  expect:
+    must_address: []
+    must_not: [编造新品细节, 承诺可预订具体款式]
+
+- id: S5-05
+  scenario: event_invitation
+  title: 异地 · 成都客户邀上海工艺展
+  tags: [活动邀请, 熟悉, E01, 异地客户, 截图裁切]
+  client:
+    client_id: C038
+    name: 姚女士
+    preferred_name: null
+    gender: F
+    city: 成都
+    relationship: 熟悉
+    purchases: [{product: 经纬丝巾 90 墨绿, date: "2025-11-11"}]
+    preferences: [丝巾, 艺术]
+    important_dates: []
+    notes: 每月去上海出差一两次
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-02 微信"
+  dialog:
+    - {speaker: client, time: "11-02 08:30", text: "月底又要去上海出差了"}
+    - {speaker: ca, time: "11-02 09:00", text: "辛苦啦姚女士，注意休息。"}
+  screenshot: {style: cropped, client_display_name: 姚姚Yao}
+  product_ids: []
+  event_id: E01
+  context: {today: "2026-11-12", occasion: null, ca_name: Amy}
+  expect:
+    must_address: []
+    must_not: [把活动说成在成都, 假设客户一定在上海]
+
+- id: S5-06
+  scenario: event_invitation
+  title: 客户上次婉拒 · 再次邀约
+  tags: [活动邀请, 熟悉, E02, 客户婉拒过, 群聊截图]
+  client:
+    client_id: C039
+    name: 薛女士
+    preferred_name: null
+    gender: F
+    city: 北京
+    relationship: 熟悉
+    purchases: [{product: 经纬丝巾 90 湖蓝, date: "2025-10-01"}]
+    preferences: [丝巾]
+    important_dates: []
+    notes: 年底工作很忙
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-09-15 客户群"
+  dialog:
+    - {speaker: ca, time: "09-15 10:00", text: "薛女士，周六的新品鉴赏您方便来吗？"}
+    - {speaker: client, time: "09-15 12:40", text: "最近太忙了，这次就不去了，谢谢哈"}
+  screenshot: {style: group_chat, client_display_name: 薛薛}
+  product_ids: []
+  event_id: E02
+  context: {today: "2026-11-18", occasion: null, ca_name: Kevin}
+  expect:
+    must_address: []
+    must_not: [让客户有压力, 提及上次没来]
+
+- id: S5-07
+  scenario: event_invitation
+  title: 工艺展 · 携女儿同来 · 客户爱表情
+  tags: [活动邀请, 挚交, E01, 可携伴, 客户大量emoji]
+  client:
+    client_id: C040
+    name: 方女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 挚交
+    purchases: [{product: 罗讷托特包 黑色, date: "2024-03-10"}, {product: 经纬丝巾 90 珊瑚, date: "2025-08-01"}]
+    preferences: [丝巾, 艺术]
+    important_dates: []
+    notes: 女儿在美院读染织专业
+    comm_style: 爱用表情
+    no_emoji: false
+    last_interaction: "2026-11-06 微信"
+  dialog:
+    - {speaker: client, time: "11-06 21:00", text: "女儿说她们这学期在学丝网印😆😆"}
+    - {speaker: client, time: "11-06 21:01", text: "天天在家给我讲颜色套版🤯🎨"}
+    - {speaker: ca, time: "11-06 21:10", text: "好专业，跟我们丝巾的工艺是一回事呢。"}
+    - {speaker: client, time: "11-06 21:11", text: "哈哈真的吗😍"}
+  screenshot: {style: emoji_heavy, client_display_name: 方方🌸}
+  product_ids: []
+  event_id: E01
+  context: {today: "2026-11-10", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [超过1个表情, 编造活动信息]
+
+- id: S5-08
+  scenario: event_invitation
+  title: 私人预览 · 初识 · 信息极少
+  tags: [活动邀请, 初识, E04, 信息稀少, 无对话]
+  client:
+    client_id: C041
+    name: 江女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 初识
+    purchases: [{product: 沙漏包 Sablier 迷你款 黑色, date: "2026-09-30"}]
+    preferences: []
+    important_dates: []
+    notes: null
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-09-30 到店购买"
+  dialog: []
+  product_ids: []
+  event_id: E04
+  context: {today: "2026-12-01", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: []
+    must_not: [编造客户兴趣, 过度热情, 制造稀缺]
+
+# ───────────────────────── S6 价格异议 ─────────────────────────
+- id: S6-01
+  scenario: price_objection
+  title: 嫌贵 · 沙漏包中号
+  tags: [价格异议, 初识, 嫌贵]
+  client:
+    client_id: C042
+    name: 陆女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 初识
+    purchases: []
+    preferences: [黑色]
+    important_dates: []
+    notes: 第一次到店试背沙漏包中号
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-07 到店"
+  dialog:
+    - {speaker: client, time: "11-07 22:00", text: "回家想了想，四万六还是比我想的贵不少"}
+  screenshot: {style: normal, client_display_name: Lu}
+  product_ids: [P01, P02]
+  event_id: null
+  context: {today: "2026-11-08", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: [觉得贵]
+    must_not: [暗示折扣, 居高临下说值, 催促]
+
+- id: S6-02
+  scenario: price_objection
+  title: 香港比价
+  tags: [价格异议, 熟悉, 海外比价, 文字对话]
+  client:
+    client_id: C043
+    name: 潘女士
+    preferred_name: null
+    gender: F
+    city: 北京
+    relationship: 熟悉
+    purchases: [{product: 经纬丝巾 90 湖蓝, date: "2025-03-01"}]
+    preferences: [奶白]
+    important_dates: []
+    notes: 想要迷你沙漏包奶白色
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-08 微信"
+  dialog:
+    - {speaker: client, time: "11-08 20:30", text: "下个月去香港，看那边迷你沙漏包便宜好几千"}
+    - {speaker: client, time: "11-08 20:31", text: "你们能不能按香港价给我？"}
+  product_ids: [P02]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Kevin}
+  expect:
+    must_address: [能否按香港价]
+    must_not: [暗示折扣, 贬低香港渠道, 编造香港价格]
+
+- id: S6-03
+  scenario: price_objection
+  title: 代购比价
+  tags: [价格异议, 初识, 代购, 截图裁切]
+  client:
+    client_id: C044
+    name: 程女士
+    preferred_name: null
+    gender: F
+    city: 成都
+    relationship: 初识
+    purchases: []
+    preferences: [焦糖棕]
+    important_dates: []
+    notes: 看中沙漏包中号焦糖棕
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-06 微信"
+  dialog:
+    - {speaker: client, time: "11-06 23:10", text: "代购说能便宜八千"}
+    - {speaker: client, time: "11-06 23:10", text: "你们专柜怎么贵这么多"}
+  screenshot: {style: cropped, client_display_name: 程程Cheng}
+  product_ids: [P01]
+  event_id: null
+  context: {today: "2026-11-07", occasion: null, ca_name: Amy}
+  expect:
+    must_address: [代购便宜八千]
+    must_not: [贬低代购, 暗示假货, 暗示折扣]
+
+- id: S6-04
+  scenario: price_objection
+  title: 直接要九折
+  tags: [价格异议, 熟悉, 直接要折扣, 截图模糊]
+  client:
+    client_id: C045
+    name: 孔女士
+    preferred_name: null
+    gender: F
+    city: 杭州
+    relationship: 熟悉
+    purchases: [{product: 索恩斜挎包 焦糖棕, date: "2025-05-20"}]
+    preferences: [通勤]
+    important_dates: []
+    notes: 想买罗讷托特包上班用
+    comm_style: 直接
+    no_emoji: false
+    last_interaction: "2026-11-08 微信"
+  dialog:
+    - {speaker: client, time: "11-08 12:00", text: "罗讷那只我挺想要的"}
+    - {speaker: client, time: "11-08 12:01", text: "能打个九折吗？打了我今天就定"}
+  screenshot: {style: blurry, client_display_name: Kong}
+  product_ids: [P03]
+  event_id: null
+  context: {today: "2026-11-08", occasion: null, ca_name: Leo}
+  expect:
+    must_address: [要求九折]
+    must_not: [暗示折扣, 我帮您问问, 催促今天下单]
+
+- id: S6-05
+  scenario: price_objection
+  title: 不打折就送丝巾
+  tags: [价格异议, 熟悉, 要赠品, 客户大量emoji]
+  client:
+    client_id: C046
+    name: 魏女士
+    preferred_name: null
+    gender: F
+    city: 上海
+    relationship: 熟悉
+    purchases: [{product: 金丝卡包 黑色, date: "2025-12-24"}]
+    preferences: [黑色, 丝巾]
+    important_dates: []
+    notes: 准备买沙漏包中号黑色
+    comm_style: 爱用表情
+    no_emoji: false
+    last_interaction: "2026-11-08 微信"
+  dialog:
+    - {speaker: client, time: "11-08 19:00", text: "知道你们不打折😂"}
+    - {speaker: client, time: "11-08 19:00", text: "那送条丝巾总可以吧🙏🙏"}
+    - {speaker: client, time: "11-08 19:01", text: "我诚心买的🥺"}
+  screenshot: {style: emoji_heavy, client_display_name: 魏魏🐰}
+  product_ids: [P01]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: [要求送丝巾]
+    must_not: [承诺赠品, 暗示可以申请, 使用表情]
+
+- id: S6-06
+  scenario: price_objection
+  title: 竞品比较 · 男士公文包
+  tags: [价格异议, 男士, 竞品比较]
+  client:
+    client_id: C047
+    name: 袁先生
+    preferred_name: null
+    gender: M
+    city: 北京
+    relationship: 初识
+    purchases: []
+    preferences: [低调, 无logo]
+    important_dates: []
+    notes: 在看工坊公文包
+    comm_style: 简短
+    no_emoji: false
+    last_interaction: "2026-11-07 到店"
+  dialog:
+    - {speaker: client, time: "11-07 21:00", text: "别家同价位的公文包 logo 更明显，用料也差不多"}
+    - {speaker: client, time: "11-07 21:01", text: "你们贵在哪？"}
+  screenshot: {style: normal, client_display_name: Yuan}
+  product_ids: [P09]
+  event_id: null
+  context: {today: "2026-11-08", occasion: null, ca_name: Kevin}
+  expect:
+    must_address: [贵在哪]
+    must_not: [贬低竞品, 编造工艺数字]
+
+- id: S6-07
+  scenario: price_objection
+  title: 犹豫后沉默 5 天
+  tags: [价格异议, 初识, 犹豫沉默, 文字对话]
+  client:
+    client_id: C048
+    name: 董女士
+    preferred_name: null
+    gender: F
+    city: 成都
+    relationship: 初识
+    purchases: []
+    preferences: [浅杏]
+    important_dates: []
+    notes: 看中索恩斜挎包浅杏
+    comm_style: null
+    no_emoji: false
+    last_interaction: "2026-11-03 微信"
+  dialog:
+    - {speaker: client, time: "11-03 20:00", text: "两万八一个斜挎包，我再想想吧"}
+    - {speaker: ca, time: "11-03 20:10", text: "好的董女士，您慢慢考虑。"}
+  product_ids: [P04]
+  event_id: null
+  context: {today: "2026-11-08", occasion: null, ca_name: Amy}
+  expect:
+    must_address: []
+    must_not: [追问考虑得怎么样, 催促, 暗示折扣]
+
+- id: S6-08
+  scenario: price_objection
+  title: 语气强硬 · 男士旅行袋
+  tags: [价格异议, 男士, 语气强硬, 负面情绪, 多张截图]
+  client:
+    client_id: C049
+    name: 钟先生
+    preferred_name: null
+    gender: M
+    city: 上海
+    relationship: 熟悉
+    purchases: [{product: 经纬皮带, date: "2024-11-11"}]
+    preferences: [实用]
+    important_dates: []
+    notes: 在看旅程旅行袋
+    comm_style: 说话直接
+    no_emoji: false
+    last_interaction: "2026-11-08 微信"
+  dialog:
+    - {speaker: client, time: "11-08 22:30", text: "一个帆布拼皮的包卖四万一？"}
+    - {speaker: client, time: "11-08 22:30", text: "你们这价格就是抢钱"}
+    - {speaker: client, time: "11-08 22:31", text: "[语音 12″]", type: voice}
+  screenshot: {style: multi, client_display_name: 钟}
+  product_ids: [P10]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Leo}
+  expect:
+    must_address: [客户的不满]
+    must_not: [与客户争辩, 说教, 暗示折扣]
+
+- id: S6-09
+  scenario: price_objection
+  title: 挚交以老客户身份二次要优惠
+  tags: [价格异议, 挚交, 老客户优惠, 二次施压, 英文称呼, 文字对话]
+  client:
+    client_id: C050
+    name: 沈女士
+    preferred_name: Grace
+    gender: F
+    city: 上海
+    relationship: 挚交
+    purchases: [{product: 沙漏包 Sablier 中号 黑色, date: "2020-12-20"}, {product: 罗讷托特包 深海军蓝, date: "2023-03-15"}, {product: 经纬披肩 140 暮紫, date: "2025-11-30"}]
+    preferences: [酒红, 经典款]
+    important_dates: []
+    notes: 想预订沙漏包中号酒红色
+    comm_style: 叫她 Grace
+    no_emoji: false
+    last_interaction: "2026-11-08 微信"
+  dialog:
+    - {speaker: client, time: "11-08 20:00", text: "酒红那只我想订，老客户总有点优惠吧？"}
+    - {speaker: ca, time: "11-08 20:10", text: "Grace，我们是全国统一价，这点我得跟您说实话。"}
+    - {speaker: client, time: "11-08 20:15", text: "我都买了这么多年了，你去跟店长说说嘛"}
+  product_ids: [P01]
+  event_id: null
+  context: {today: "2026-11-09", occasion: null, ca_name: Vivian}
+  expect:
+    must_address: [再次要求找店长要优惠]
+    must_not: [我帮您跟店长申请, 提及消费金额, 承诺预订时间以外的到货日期]
