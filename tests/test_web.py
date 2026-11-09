@@ -9,9 +9,11 @@ def test_web_generate_flow():
 
     at = AppTest.from_file(str(__import__("pathlib").Path(__file__).resolve().parent.parent / "web" / "app.py"), default_timeout=30).run()
     assert not at.exception
-    at.selectbox[0].select_index(1).run()
-    at.button[0].click().run()  # 载入
-    assert at.session_state["name"]
+    at.selectbox[0].select("S6-02").run()  # selecting a case fills the form, no button
+    assert not at.exception
+    assert next(w for w in at.text_input if w.label == "称呼").value == "潘女士"
+    assert at.selectbox(key="scenario").value == "price_objection"
+    assert len(at.session_state["dialog_df"]) > 0
     gen = next(b for b in at.button if b.label == "生成 3 条话术")
     gen.click().run()
     assert not at.exception
