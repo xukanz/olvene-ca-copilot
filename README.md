@@ -8,7 +8,7 @@ An AI tool that drafts three on-brand Chinese WeChat messages (话术) for luxur
 
 ## Demo
 
-**Live demo:** https://olvene-copilot-83224434541.us-central1.run.app.
+**Live demo:** https://olvene-copilot-83224434541.us-central1.run.app
 
 **Recording:** Recording of the live app ([MP4](submission/assets/demo.mp4)): load test case S1-02, generate three candidate messages, choose one, then regenerate. 
 
