@@ -14,10 +14,12 @@ def _req(scenario, **client):
     return GenerateRequest(scenario=scenario, client=c, dialog=[], context={"today": "2026-11-09"})
 
 
-def _hard(scenario, text, req=None, **client):
+def _hard(scenario, text, req=None, keep_copy=False, **client):
     req = req or _req(scenario, **client)
     ctx = build_context(BRAND, req, DialogAnalysis(), "v1")
-    return sorted({f.code for f in check_candidate(BRAND, req, ctx, 0, text) if f.level == "hard"})
+    # The guide's own examples are used as inputs here, so ignore the copy check except where tested.
+    return sorted({f.code for f in check_candidate(BRAND, req, ctx, 0, text) if f.level == "hard"} - {"copied_example"} | (
+        {"copied_example"} if keep_copy and any(f.code == "copied_example" for f in check_candidate(BRAND, req, ctx, 0, text)) else set()))
 
 
 GOOD = [
@@ -72,3 +74,10 @@ def test_gender_and_emoji():
     assert "emoji_count" in _hard(
         "birthday_festive", "周女士，生日快乐🌿 新的一岁一切顺遂，天冷了多添衣。", no_emoji=True
     )
+
+
+def test_copied_example_detected():
+    copied = "王女士，最近好吗？今年秋冬的经纬丝巾出了一款雾霾蓝，我第一眼就想到您以前很喜欢的那条湖蓝色。您有兴趣的话我拍几张给您。"
+    assert "copied_example" in _hard("reactivation", copied, keep_copy=True, name="王女士")
+    own = "王女士，最近好吗？店里刚到了一款雾霾蓝的经纬丝巾，颜色比湖蓝更沉静一些，您有兴趣的话我拍几张实物给您看看。"
+    assert "copied_example" not in _hard("reactivation", own, keep_copy=True, name="王女士")

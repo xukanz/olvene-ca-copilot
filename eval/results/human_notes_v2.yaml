@@ -1,0 +1,9 @@
+# Human review of v2 outputs (2026-11-09), against what the j2 judge / L1 rules flagged as unacceptable.
+# verdict: ok = human accepts the output → judge or rule false positive; defect = real problem.
+- {case: S2-02, verdict: ok, flagged_by: judge, note: "“阿姨 60 大寿”是客户自己说的，提及没问题。裁判把“不提年龄”误用到家人寿辰；已在 brand_guide v1.1 §4 澄清"}
+- {case: S6-01, verdict: ok, flagged_by: "L1 discount_mention", note: "“确实没办法在价格上给到折扣”是明确拒绝。否定词距关键词 9 字，超出 8 字检测窗口；已放宽到 12 字"}
+- {case: S6-05, verdict: ok, flagged_by: "L1 emoji_count", note: "价格异议结尾带一个 🌿 可以接受"}
+- {case: S4-03, verdict: ok, flagged_by: judge, note: "输出可以接受"}
+- {case: S4-07, verdict: ok, flagged_by: judge, note: "输出可以接受"}
+- {case: S2-06, verdict: defect, flagged_by: judge, note: "语音未转文字时模型编了“语音我现在不方便听”的理由。修复：输入支持微信自带的“语音转文字”（截图样式、transcript 字段、解析 prompt）；未转文字时话术不提语音，改为提醒 CA 先查看"}
+- {case: S6-03, verdict: defect, flagged_by: judge, note: "裁切截图丢失时间条，无法判断回复延迟，三条都没有致歉。修复：截图无时间时用客户档案的最近互动日期推算"}

@@ -30,7 +30,7 @@ from api.pipeline.parse_screenshot import format_dialog
 from api.pipeline.run import run_pipeline
 from api.schemas import SCENARIO_LABELS, DialogAnalysis, DialogTurn
 
-from .judge import judge_case, weighted
+from .judge import JUDGE_VERSION, judge_case, weighted
 
 # On Cloud Run Jobs, mount a GCS bucket as a volume and point RESULTS_DIR at it.
 RESULTS = Path(os.environ.get("RESULTS_DIR", str(ROOT / "eval" / "results")))
@@ -95,27 +95,49 @@ def run_case(case: dict, version: str, use_screens: bool, do_judge: bool) -> dic
     hard_by_idx = {f["candidate"] for f in r["checks"]["flags"] if f["level"] == "hard" and f["candidate"] is not None}
     rec["hard_fail"] = [i in hard_by_idx for i in range(3)]
 
-    scores = None
+    rec["scores"] = None
     if do_judge:
-        brand = load_brand()
-        truth = DialogAnalysis(dialog=[DialogTurn(**t) for t in case.get("dialog") or []])
-        ctx = build_context(brand, case_to_request(case, use_screenshots=False), truth, s.prompt_version)
-        stats = CallStats()
-        try:
-            j = judge_case(case, render_client(req), format_dialog(truth.dialog), ctx.facts_text, r["candidates"], s, stats)
-            scores = [None, None, None]
-            for cs in j.candidates:
-                if 0 <= cs.index < 3:
-                    scores[cs.index] = {**cs.model_dump(), "weighted": weighted(cs)}
-            rec["diversity"] = j.diversity
-            rec["set_comment"] = j.set_comment
-            rec["judge_calls"] = stats.calls
-        except Exception as e:
-            log.warning("judge failed for %s: %s", case["id"], e)
-            rec["judge_error"] = str(e)
-    rec["scores"] = scores
-    rec["grades"] = [grade(rec["hard_fail"][i], scores[i] if scores else None) for i in range(3)]
+        judge_record(case, rec)
+    rec["grades"] = [grade(rec["hard_fail"][i], rec["scores"][i] if rec["scores"] else None) for i in range(3)]
     rec["wall_ms"] = int((time.time() - t0) * 1000)
+    return rec
+
+
+def judge_record(case: dict, rec: dict) -> dict:
+    """Score rec["candidates"] in place. The judge always sees the ground-truth dialog, not the parsed one."""
+    s = get_settings()
+    brand = load_brand()
+    req = case_to_request(case, use_screenshots=False)
+    truth = DialogAnalysis(dialog=req.dialog or [])
+    ctx = build_context(brand, req, truth, s.prompt_version)
+    stats = CallStats()
+    rec.pop("judge_error", None)
+    try:
+        j = judge_case(
+            case, render_client(req), format_dialog(truth.dialog), ctx.facts_text, rec["candidates"], s, stats,
+            dialog_state=ctx.state.text if ctx.state else "",
+        )
+        scores = [None, None, None]
+        for cs in j.candidates:
+            if 0 <= cs.index < 3:
+                scores[cs.index] = {**cs.model_dump(), "weighted": weighted(cs)}
+        rec["scores"] = scores
+        rec["diversity"] = j.diversity
+        rec["set_comment"] = j.set_comment
+        rec["judge_calls"] = stats.calls
+    except Exception as e:
+        log.warning("judge failed for %s: %s", case["id"], e)
+        rec["judge_error"] = str(e)
+        rec["scores"] = None
+    rec["judge_version"] = JUDGE_VERSION
+    rec["judge_model"] = s.judge_model
+    return rec
+
+
+def rejudge(case: dict, rec: dict, version: str) -> dict:
+    rec = {**rec, "version": version}
+    judge_record(case, rec)
+    rec["grades"] = [grade(rec["hard_fail"][i], rec["scores"][i] if rec["scores"] else None) for i in range(3)]
     return rec
 
 
@@ -192,6 +214,7 @@ def main() -> None:
     ap.add_argument("--only", default=os.environ.get("EVAL_ONLY", ""))
     ap.add_argument("--text-dialog", action="store_true")
     ap.add_argument("--no-judge", action="store_true")
+    ap.add_argument("--rejudge", metavar="FROM", help="re-score FROM.jsonl outputs with the current judge, no regeneration")
     ap.add_argument("--workers", type=int, default=int(os.environ.get("EVAL_WORKERS", "4")))
     a = ap.parse_args()
 
@@ -204,7 +227,11 @@ def main() -> None:
 
     records = []
     with ThreadPoolExecutor(max_workers=a.workers) as ex:
-        futs = {ex.submit(run_case, c, a.version, not a.text_dialog, not a.no_judge): c["id"] for c in cases}
+        if a.rejudge:
+            prev = {json.loads(x)["case_id"]: json.loads(x) for x in (RESULTS / f"{a.rejudge}.jsonl").read_text().splitlines() if x.strip()}
+            futs = {ex.submit(rejudge, c, prev[c["id"]], a.version): c["id"] for c in cases if c["id"] in prev}
+        else:
+            futs = {ex.submit(run_case, c, a.version, not a.text_dialog, not a.no_judge): c["id"] for c in cases}
         for f in as_completed(futs):
             rec = f.result()
             records.append(rec)

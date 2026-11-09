@@ -403,7 +403,7 @@
     - {speaker: client, time: "11-03 22:01", text: "Promotion 下来了 😂"}
     - {speaker: ca, time: "11-03 22:05", text: "恭喜 Kevin！实至名归。"}
     - {speaker: client, time: "11-03 22:08", text: "以后要天天 meeting 了，电脑包得换个像样点的"}
-    - {speaker: client, time: "11-03 22:08", text: "[语音 6″]", type: voice}
+    - {speaker: client, time: "11-03 22:08", text: "[语音 6″]", type: voice, transcript: "最好黑色的，能放下十五寸电脑，低调一点别太张扬"}
   screenshot: {style: multi, client_display_name: Kevin Li}
   product_ids: [P09]
   event_id: null

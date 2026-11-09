@@ -67,6 +67,7 @@ class DialogTurn(BaseModel):
     time: str | None = None
     text: str
     type: Literal["text", "image", "voice", "sticker", "recall", "other"] = "text"
+    transcript: str | None = Field(None, description="语音消息在微信中“转文字”后显示的文字；未转文字为 null")
 
 
 class RequestContext(BaseModel):

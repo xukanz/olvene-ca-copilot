@@ -34,7 +34,26 @@ _QUESTION_FORM = re.compile(r"能不能|可不可以|是不是|有没有|会不�
 _DEMAND_VISIT = re.compile(
     r"(欢迎|请|邀请)您?.{0,6}(来店|到店|光临|过来看看|来看看)|(这周|本周|周末|明天|改天).{0,6}(来店|到店|过来看看)"
 )
+_APOLOGY = re.compile(r"抱歉|不好意思|久等|回复晚|回晚|回得晚|才回|没来得及|没能及时|耽误|让您等")
+_IMPERATIVE = re.compile(r"别忘了|记得带上|吃顿好的|不如一起来|一定要去|赶快去|快去")
+_UNKNOWN_CONTENT = re.compile(
+    r"(语音|录音).{0,6}(听了|听完|听到|收到了|不方便听|听不了|没法听)|(照片|图片).{0,6}(看了|看到了|看完).{0,10}(您说|您提到)"
+)
 _AI_TONE = ["愿这份", "这份心意", "为您带来", "点亮您", "温暖您的", "每一个美好", "美好的回忆", "陪伴您度过"]
+
+
+COPY_MIN_CHARS = 15
+
+
+def guide_examples(brand: Brand) -> list[str]:
+    """Quoted example messages (lines starting with '>') in brand_guide.md §7."""
+    sec = brand.guide_md.split("## 7.", 1)[-1]
+    return [ln.lstrip("> ").strip() for ln in sec.splitlines() if ln.startswith(">") and len(ln) > 20]
+
+
+def longest_shared(a: str, b: str) -> str:
+    m = difflib.SequenceMatcher(None, a, b, autojunk=False).find_longest_match(0, len(a), 0, len(b))
+    return a[m.a : m.a + m.size]
 
 
 def char_len(text: str) -> int:
@@ -106,7 +125,8 @@ def check_candidate(
 
     # ---- discount words only allowed as refusal (all scenarios)
     for m in _DISCOUNT_WORD.finditer(text):
-        before = _QUESTION_FORM.sub("", text[max(0, m.start() - 8) : m.start()])
+        # 12 chars: "确实没办法在价格上给到折扣" puts the negation 9 chars before the keyword.
+        before = _QUESTION_FORM.sub("", text[max(0, m.start() - 12) : m.start()])
         if not _NEGATION.search(before):
             add("hard", "discount_mention", f"「{text[max(0, m.start() - 6) : m.end()]}」不是明确拒绝语境")
 
@@ -136,6 +156,13 @@ def check_candidate(
     if len(emojis) > ctx.emoji_max:
         add("hard", "emoji_count", f"表情 {len(emojis)} 个，本条上限 {ctx.emoji_max}")
 
+    # ---- copying the brand guide's few-shot examples
+    for ex in guide_examples(brand):
+        shared = longest_shared(text, ex)
+        if len(re.sub(r"[，。、\s]", "", shared)) >= COPY_MIN_CHARS:
+            add("hard", "copied_example", f"照抄品牌指南示例「{shared}」")
+            break
+
     # ---- soft phrases, tail particles, AI tone
     for ph in rules["soft"]["phrases"]:
         if ph in text:
@@ -147,12 +174,24 @@ def check_candidate(
         if ph in text:
             add("soft", "ai_tone", f"AI 腔「{ph}」")
 
-    # ---- salutation & gender
+    # ---- salutation, conversation rhythm (brand_guide §4.1) & gender
     c = req.client
     surname = c.name[0] if c.name else ""
     names = [x for x in (c.name, c.preferred_name) if x]
-    if names and not any(nm in text for nm in names) and (not surname or surname not in text):
-        add("soft", "no_salutation", "没有称呼客户")
+    st = ctx.state
+    head = text.lstrip()[:8]
+    if st and st.omit_salutation and any(head.startswith(n) for n in names):
+        add("soft", "repeat_salutation", "对话进行中且已称呼过客户，又以称呼开头")
+    if st and st.reply_delayed and not _APOLOGY.search(text[:60]):
+        add("hard", "no_delay_apology", f"客户已等 {st.days_since_last} 天，开头没有为回复晚道歉或解释")
+    m = _IMPERATIVE.search(text)
+    if m:
+        add("soft", "imperative", f"对客户下指令「{m.group(0)}」")
+    unseen = any((t.type == "voice" and not t.transcript) or t.type == "image" for t in (req.dialog or [])) or bool(
+        req.dialog_screenshots)
+    m = _UNKNOWN_CONTENT.search(text)
+    if m and unseen:
+        add("soft", "unknown_content_claim", f"声称听过/看过未知内容「{m.group(0)}」")
     if surname:
         if c.gender == "F" and re.search(f"{surname}先生", text):
             add("hard", "wrong_gender", f"女性客户被称为「{surname}先生」")
@@ -263,6 +302,7 @@ def llm_review(
         client=ctx.client_text,
         dialog=ctx.dialog_text,
         open_questions="；".join(ctx.open_questions) or "无",
+        dialog_state=ctx.state.text if ctx.state else "",
         facts=ctx.facts_text,
         candidates="\n".join(f"[候选 {i}] 角度：{c.angle}\n{c.text}\n" for i, c in enumerate(candidates)),
     )
@@ -280,11 +320,13 @@ def llm_review(
             issues.append("推销过度")
         if r.ignores_open_question:
             issues.append("未回应客户的问题/情绪")
+        # Only substantive problems trigger a rewrite; tone-only notes are shown to the CA as soft flags.
+        severe = bool(issues)
         issues += r.off_brand_issues
         detail = "；".join(issues) or "审查未通过"
         if r.fix_instruction:
             detail += f"。建议：{r.fix_instruction}"
-        flags.append(Flag(candidate=r.index, level="llm", code="llm_review", detail=detail))
+        flags.append(Flag(candidate=r.index, level="llm" if severe else "soft", code="llm_review", detail=detail))
     if out.too_similar:
         flags.append(Flag(candidate=None, level="soft", code="llm_too_similar", detail="审查认为三条角度雷同"))
     return flags, out

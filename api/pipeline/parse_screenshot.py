@@ -19,7 +19,10 @@ def format_dialog(turns: list[DialogTurn]) -> str:
     for t in turns:
         who = {"ca": "CA", "client": "客户", "other": "其他人", "system": "系统"}[t.speaker]
         ts = f"[{t.time}] " if t.time else ""
-        lines.append(f"{ts}{who}：{t.text}")
+        text = t.text
+        if t.type == "voice":
+            text += f"（微信转文字：{t.transcript}）" if t.transcript else "（未转文字，内容未知）"
+        lines.append(f"{ts}{who}：{text}")
     return "\n".join(lines)
 
 
