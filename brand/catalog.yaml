@@ -1,0 +1,219 @@
+# Maison Olvène 欧薇恩 — 虚构产品、服务、门店与活动资料
+# 生成时，价格 / 材质 / 工艺数字 / 库存 / 活动信息只能取自本文件。
+# 价格单位：人民币，全国统一零售价，不打折。
+
+boutiques:
+  - id: SH
+    name: 欧薇恩上海精品店
+    city: 上海
+  - id: BJ
+    name: 欧薇恩北京精品店
+    city: 北京
+  - id: CD
+    name: 欧薇恩成都精品店
+    city: 成都
+  - id: HZ
+    name: 欧薇恩杭州精品店
+    city: 杭州
+
+products:
+  - id: P01
+    name_cn: 沙漏包
+    name_en: Sablier
+    variant: 中号
+    category: 女士手袋
+    price: 46000
+    material: 全粒面小牛皮，羊皮内衬
+    craft: 由一位匠人独立完成，约 18 小时手工缝制；边油手工涂刷多遍；内侧有匠人编号
+    colors: [黑色, 焦糖棕, 雾灰, 酒红]
+    fits: 品牌标志性款式，日常与正式场合皆宜
+    care: 避免长时间暴晒和淋雨；淋湿后用干软布按干，勿用吹风机；不用时填充防尘纸存放
+    availability: 现货（酒红色需预订，约 6 周）
+
+  - id: P02
+    name_cn: 沙漏包
+    name_en: Sablier Mini
+    variant: 迷你款
+    category: 女士手袋
+    price: 32000
+    material: 全粒面小牛皮，羊皮内衬
+    craft: 与中号同样由一位匠人独立完成手工缝制；内侧有匠人编号
+    colors: [黑色, 焦糖棕, 奶白]
+    fits: 晚宴、周末出行；可放手机、卡包和口红
+    care: 同沙漏包中号；浅色款避免与深色牛仔面料长时间摩擦
+    availability: 现货
+
+  - id: P03
+    name_cn: 罗讷托特包
+    name_en: Rhône
+    category: 女士手袋
+    price: 38500
+    material: 颗粒压纹小牛皮，帆布内袋可拆
+    craft: 无内衬结构，皮面耐刮；手柄手工缝线
+    colors: [黑色, 深海军蓝, 橄榄绿]
+    fits: 通勤，可放 14 英寸笔记本电脑
+    care: 压纹皮耐用，日常用湿布轻擦即可
+    availability: 现货
+
+  - id: P04
+    name_cn: 索恩斜挎包
+    name_en: Saône
+    category: 女士手袋
+    price: 27800
+    material: 光面小牛皮
+    craft: 肩带可调节长度，金属件为手工抛光黄铜
+    colors: [黑色, 焦糖棕, 浅杏]
+    fits: 日常轻便出行，旅行
+    care: 光面皮易留划痕，可到店做免费基础护理
+    availability: 现货
+
+  - id: P05
+    name_cn: 经纬丝巾 90
+    name_en: Trame Carré 90
+    category: 丝巾
+    price: 5200
+    material: 100% 真丝斜纹绸，90×90cm
+    craft: 里昂手工丝网印刷，每种颜色单独套版；手工卷边
+    colors: [湖蓝, 雾霾蓝（2026 秋冬新色）, 珊瑚, 墨绿]
+    fits: 自用与送礼皆宜；可系颈、系包、做发带
+    care: 建议专业干洗，不可机洗；避免香水直接喷洒
+    availability: 现货
+
+  - id: P06
+    name_cn: 经纬披肩 140
+    name_en: Trame Châle 140
+    category: 披肩
+    price: 9800
+    material: 70% 羊绒 30% 真丝，140×140cm
+    craft: 手工丝网印刷，手工流苏
+    colors: [驼色, 灰蓝, 暮紫]
+    fits: 秋冬保暖，适合送给长辈
+    care: 专业干洗；收纳时平放，避免挂压
+    availability: 现货
+
+  - id: P07
+    name_cn: 金丝卡包
+    name_en: Fil d'Or Card Holder
+    category: 小皮具
+    price: 4600
+    material: 小牛皮，金色丝线缝边
+    craft: 金色缝线为手工缝制
+    colors: [黑色, 酒红, 森林绿]
+    fits: 入门礼物，男女皆宜
+    care: 避免与钥匙等硬物同放
+    availability: 现货
+
+  - id: P08
+    name_cn: 金丝长款钱夹
+    name_en: Fil d'Or Long Wallet
+    category: 小皮具
+    price: 8900
+    material: 小牛皮，金色丝线缝边
+    craft: 金色缝线为手工缝制，12 个卡位
+    colors: [黑色, 焦糖棕]
+    fits: 自用或送礼
+    care: 同金丝卡包
+    availability: 现货
+
+  - id: P09
+    name_cn: 工坊公文包
+    name_en: Atelier Briefcase
+    category: 男士皮具
+    price: 52000
+    material: 全粒面小牛皮
+    craft: 马鞍针法手工缝制；内侧有匠人编号
+    colors: [黑色, 深棕]
+    fits: 商务通勤，可放 15 英寸笔记本电脑
+    care: 定期到店做皮面养护
+    availability: 现货
+
+  - id: P10
+    name_cn: 旅程旅行袋
+    name_en: Voyage Weekender
+    category: 男士皮具
+    price: 41000
+    material: 小牛皮与涂层帆布拼接，帆布内衬
+    craft: 比全皮款轻约 40%，尺寸符合多数航空公司登机行李规定
+    colors: [黑色/炭灰, 深棕/卡其]
+    fits: 短途出差、周末旅行
+    care: 帆布部分可用湿布擦拭
+    availability: 现货（2026 年 10 月新到）
+
+  - id: P11
+    name_cn: 经纬皮带
+    name_en: Trame Belt
+    category: 男士皮具
+    price: 7200
+    material: 小牛皮，可双面使用（黑/棕）
+    craft: 带扣为手工抛光钯金属
+    colors: [黑/棕双面]
+    fits: 商务与日常
+    care: 避免长期弯折存放
+    availability: 现货
+
+  - id: P12
+    name_cn: 定制手袋
+    name_en: Sur Mesure
+    category: 定制
+    price_from: 88000
+    material: 客户可选皮料、颜色、五金与内衬
+    craft: 与匠人沟通设计，全程手工制作
+    lead_time: 5–7 个月
+    fits: 纪念意义的礼物或收藏
+    availability: 需预约顾问面谈
+
+services:
+  - 皮具购买时免费烫印姓名缩写（最多 3 个字母）
+  - 终身基础清洁保养（皮具），维修按工坊报价
+  - 为客户预留商品 48 小时
+  - 发送实物照片或短视频
+  - 丝巾系法教学（到店或视频）
+  - 预约私人试看时段
+  - 送货到府（仅挚交客户，限门店所在城市）
+
+price_policy:
+  - 全国统一零售价，与官网一致
+  - 不打折、不参与任何促销活动、无积分与返现
+  - 各国家和地区定价受税费与汇率影响，存在差异
+  - 国内专柜购买享全国联保、终身基础保养、免费烫印
+
+events:
+  - id: E01
+    name: 经纬之间 · 里昂丝织工艺展
+    boutique: SH
+    date: 2026-11-28
+    time: "14:00–17:00"
+    highlight: 里昂工坊印染师傅现场演示丝巾手工丝网印刷，客户可亲手完成一道套色
+    capacity: 每场 20 位
+    invite_only: true
+    plus_one: 可携一位同伴
+
+  - id: E02
+    name: 冬日下午茶 · 丝巾系法沙龙
+    boutique: BJ
+    date: 2026-12-12
+    time: "15:00–17:00"
+    highlight: 造型师分享 6 种冬季丝巾与披肩系法，配法式下午茶
+    capacity: 16 位
+    invite_only: true
+    plus_one: 不可携伴
+
+  - id: E03
+    name: 男士皮具保养工作坊
+    boutique: HZ
+    date: 2026-12-19
+    time: "10:30–12:00"
+    highlight: 皮具匠人讲解日常养护，现场为客户的欧薇恩皮具做一次免费护理
+    capacity: 12 位
+    invite_only: false
+    plus_one: 可携一位同伴
+
+  - id: E04
+    name: 2027 春夏系列私人预览
+    boutique: [SH, CD]
+    date: 2027-01-16
+    time: "全天，分时段预约"
+    highlight: 新系列在发布前的私人试看，可提前预订
+    capacity: 每个时段 1 组客户
+    invite_only: true
+    plus_one: 可携一位同伴

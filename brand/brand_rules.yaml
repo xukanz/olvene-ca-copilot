@@ -1,0 +1,124 @@
+# Maison Olvène 欧薇恩 — 机器可检查的规则
+# 与 brand_guide.md 保持一致。用于生成后的自动审查（rule-based checker）。
+# 严重级别：
+#   hard_fail  —— 命中即"不可接受"，必须重写
+#   soft       —— 扣分项，提示 CA 或触发润色
+
+brand:
+  name_cn: 欧薇恩
+  name_en: Maison Olvène
+  motto_cn: 慢一点，久一点。
+
+format:
+  max_exclamation: 1
+  forbid_repeated_punctuation: true      # ！！ ？？ …… 以外的重复标点
+  forbid_links: true
+  forbid_marketing_brackets: ["【", "】", "★", "☆", "▶"]
+  forbid_bullet_list: true
+  emoji:
+    allowed: ["🌿", "🍂", "✨", "🎂", "🌙", "🎄"]
+    max_per_message:
+      birthday_festive: 1
+      event_invitation: 1
+      default: 0                         # 其余场景默认不用
+    respect_client_no_emoji: true        # 客户沟通偏好为"不用表情"时一律为 0
+
+length:                                  # 中文字符数，不含表情
+  birthday_festive:      {min: 30, max: 120}
+  product_recommendation: {min: 60, max: 180}
+  post_purchase_care:    {min: 40, max: 150}
+  reactivation:          {min: 40, max: 130}
+  event_invitation:      {min: 60, max: 180}
+  price_objection:       {min: 60, max: 200}
+
+# 命中即不可接受
+hard_fail:
+  phrases:
+    # 过度亲昵 / 电商腔
+    - 亲爱的
+    - 亲们
+    - 家人们
+    - 宝贝
+    - 宝子
+    - 姐妹们
+    - 小仙女
+    # 促销与施压
+    - 秒杀
+    - 爆款
+    - 抢购
+    - 手慢无
+    - 限时
+    - 最后一件
+    - 仅剩
+    - 错过再等
+    - 赶紧
+    - 包邮
+    - 返现
+    - 特价
+    - 清仓
+    - 性价比
+    - 内部价
+    - 员工价
+    - 内购
+    # 数据感
+    - 根据您的购买记录
+    - 系统显示
+    - 后台显示
+    - 消费记录
+    # 越界
+    - 想你了
+  regex:
+    # 承诺或暗示折扣
+    - name: discount_promise
+      pattern: "(帮您|替您|给您|为您)?(申请|争取|问问|看看能不能).{0,8}(折扣|优惠|便宜|价格)"
+    - name: discount_offer
+      # 排除"没办法打折/不打折/无法打折"等拒绝语境
+      pattern: "(?<!没办法)(?<!不能)(?<!无法)(?<!不会)(?<!没有)(?<!没)(?<!不)(给您打|可以打|能打|打)[一二三四五六七八九点\\d.]{0,3}折|享.{0,3}折扣"
+    - name: cheaper_promise
+      pattern: "(便宜|少).{0,2}(一点|一些|点儿)给您"
+    # 贬低渠道/竞品
+    - name: disparage_channel
+      pattern: "(代购|海外|香港|别家|其他品牌|别的牌子).{0,12}(假|不保真|不一定保真|不一定是正品|没保障|质量差|不靠谱)"
+    # 提及多久没来/没买
+    - name: absence_blame
+      pattern: "(已经|好久|很久|快|有)\\s*.{0,4}(个月|年|天).{0,6}(没来|没有来|没光临|没购买|没消费)"
+    # 提及年龄
+    - name: age_mention
+      pattern: "\\d{1,2}\\s*(岁|周岁)(生日)?"
+
+# 扣分项（套话、模板感）
+soft:
+  phrases:
+    - 尊敬的
+    - 感谢您一直以来的支持
+    - 祝您生活愉快
+    - 期待您的光临
+    - 欢迎您随时光临
+    - 尊贵
+    - 奢华
+    - 匠心之作
+    - 独一无二的体验
+    - 不容错过
+    - 绝对
+    - 一定要
+  tail_particles: ["哦~", "哦～", "呢~", "呢～", "啦~", "啦～", "哈~", "哈～"]
+
+# 场景级约束
+scenarios:
+  birthday_festive:
+    forbid_product_push: true
+  post_purchase_care:
+    forbid_product_push: true            # 不借售后推销新品
+  reactivation:
+    forbid_demand_visit: true            # 第一条不要求到店
+  product_recommendation:
+    max_products_mentioned: 2            # 一个主推 + 最多一个搭配
+  event_invitation:
+    facts_must_match_catalog: [date, time, venue, capacity]
+  price_objection:
+    discount_word_allowed_only_as_refusal: true   # "折扣/打折"只能出现在明确拒绝的语境
+
+# 三条候选的差异度要求
+diversity:
+  require_distinct_angles: true
+  max_pairwise_char_similarity: 0.6      # 任意两条之间的字符级相似度上限（如 difflib ratio）
