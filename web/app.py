@@ -153,10 +153,14 @@ left, mid, right = st.columns([1.05, 1.25, 1.5], gap="large")
 
 with left:
     st.markdown("**① 客户与场景**")
-    pick = st.selectbox("载入测试用例（可选）", ["—"] + [f"{k} · {v.get('title', '')}" for k, v in CASES.items()])
-    if st.button("载入", disabled=pick == "—"):
-        load_case(pick.split(" · ")[0])
-        st.rerun()
+    st.selectbox(
+        "载入测试用例（可选，选中即自动填充）",
+        ["—"] + list(CASES),
+        key="case_pick",
+        format_func=lambda k: k if k == "—" else f"{k} · {CASES[k].get('title', '')}",
+        # Callbacks run before the script body, the supported way to set other widgets' state.
+        on_change=lambda: load_case(ss.case_pick) if ss.case_pick != "—" else None,
+    )
 
     st.selectbox(
         "场景", list(SCENARIO_LABELS), key="scenario", format_func=lambda k: f"{SCENARIO_LABELS[k]}（{' / '.join(SCENARIO_ANGLES[k])}）"
