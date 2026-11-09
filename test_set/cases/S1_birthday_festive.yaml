@@ -1,0 +1,242 @@
+# S1 · 生日与节日问候（8 个用例）
+# 所有人物均为虚构。history 中 from: ca = 客户顾问，from: client = 客户。
+
+- id: S1-01
+  scenario: birthday_festive
+  occasion: 生日
+  today: 2026-11-12
+  ca: {name: 沈悦, boutique: SH}
+  client:
+    name: 周婉清
+    address_as: 周女士
+    gender: 女
+    city: 上海
+    stage: 熟悉
+    purchases:
+      - {product: P05, color: 湖蓝, date: 2025-04-18}
+      - {product: P04, color: 焦糖棕, date: 2025-10-02}
+    preferences: 偏爱蓝色与大地色，风格简洁
+    important_dates: {生日: 11-12}
+    notes:
+      - 喜欢园艺，今年春天说想把院子里的月季扩种一片
+      - 养了一只柯基，叫"豆包"
+    comm_style: 喜欢简短，偶尔用表情
+  history:
+    - {from: client, time: "2026-10-15 19:20", text: "沈小姐，那条湖蓝丝巾不小心沾了点护手霜，要紧吗？"}
+    - {from: ca, time: "2026-10-15 19:32", text: "周女士别担心，护手霜是油性的，先别用水擦。方便的话这周带到店里，我们帮您送去做专业清洁。"}
+    - {from: client, time: "2026-10-15 19:35", text: "好的，周六过去"}
+    - {from: ca, time: "2026-10-29 16:05", text: "周女士，丝巾清洁好了，颜色和手感都恢复了，您路过随时来取。"}
+    - {from: client, time: "2026-10-29 16:40", text: "太好了，谢谢你"}
+  product_ids: []
+  event_ids: []
+  focus: 生日问候中自然使用客户生活细节（园艺、柯基），不推销
+  must_not: [推销产品, 提及年龄]
+
+- id: S1-02
+  scenario: birthday_festive
+  occasion: 生日
+  today: 2026-11-20
+  ca: {name: 许哲, boutique: HZ}
+  client:
+    name: 苏念
+    address_as: 苏女士
+    gender: 女
+    city: 杭州
+    stage: 初识
+    purchases:
+      - {product: P07, color: 森林绿, date: 2026-08-20}
+    preferences: 未知
+    important_dates: {生日: 11-20}
+    notes: []
+    comm_style: 未知
+  history:
+    - {from: ca, time: "2026-08-20 15:10", text: "苏女士，谢谢您今天来店里。卡包的烫印大约三天完成，好了我通知您。"}
+    - {from: client, time: "2026-08-20 15:30", text: "好的"}
+    - {from: ca, time: "2026-08-23 11:02", text: "苏女士，卡包烫印好了，您方便的时候来取就行。"}
+    - {from: client, time: "2026-08-23 12:15", text: "收到"}
+  product_ids: []
+  event_ids: []
+  focus: 客户信息很少时，不编造细节，也不写成模板
+  must_not: [编造客户爱好或经历, 推销产品]
+
+- id: S1-03
+  scenario: birthday_festive
+  occasion: 圣诞节
+  today: 2026-12-24
+  ca: {name: 沈悦, boutique: SH}
+  client:
+    name: 许薇
+    address_as: Vivian
+    gender: 女
+    city: 上海
+    stage: 挚交
+    purchases:
+      - {product: P01, color: 黑色, date: 2022-05-14}
+      - {product: P06, color: 驼色, date: 2023-12-02}
+      - {product: P12, color: 定制, date: 2025-06-20}
+    preferences: 经典款，喜欢中性色
+    important_dates: {生日: 04-08}
+    notes:
+      - 喜欢滑雪，今年圣诞和家人去北海道
+      - 女儿在英国读大学
+      - 偏好被称呼英文名 Vivian
+    comm_style: 轻松，聊天多，常用表情
+  history:
+    - {from: client, time: "2026-12-10 21:12", text: "Joyce，下周我们就飞北海道啦，那条驼色披肩带上了"}
+    - {from: ca, time: "2026-12-10 21:20", text: "太适合了，雪地里驼色特别好看。回来要是沾了雪水或者起球，拿给我处理就好。"}
+    - {from: client, time: "2026-12-10 21:22", text: "哈哈好，给你带白色恋人"}
+    - {from: ca, time: "2026-12-10 21:25", text: "那我就不客气了，祝你们玩得开心，注意安全。"}
+  product_ids: []
+  event_ids: []
+  focus: 挚交客户的轻松语气、英文名称呼，结合正在进行的旅行
+  must_not: [推销产品]
+
+- id: S1-04
+  scenario: birthday_festive
+  occasion: 春节（除夕）
+  today: 2027-02-05
+  ca: {name: 高远, boutique: BJ}
+  client:
+    name: 陈立恒
+    address_as: 陈先生
+    gender: 男
+    city: 北京
+    stage: 熟悉
+    purchases:
+      - {product: P09, color: 黑色, date: 2024-03-08}
+      - {product: P11, color: 黑/棕双面, date: 2025-09-12}
+    preferences: 低调、实用
+    important_dates: {}
+    notes:
+      - 金融行业，工作忙
+      - 每年春节回青岛陪父母
+    comm_style: 简短，不用表情
+  history:
+    - {from: ca, time: "2026-12-20 10:15", text: "陈先生，您的公文包保养做好了，随时可以来取，也可以帮您送到公司。"}
+    - {from: client, time: "2026-12-20 12:40", text: "送公司吧，前台签收"}
+    - {from: ca, time: "2026-12-20 12:42", text: "好的，周一上午送到。"}
+    - {from: client, time: "2026-12-20 12:43", text: "收到"}
+  product_ids: []
+  event_ids: []
+  focus: 春节问候要简短，尊重"不用表情"的偏好，可提及回青岛陪父母
+  must_not: [使用表情, 推销产品, 长消息]
+
+- id: S1-05
+  scenario: birthday_festive
+  occasion: 中秋节
+  today: 2026-09-25
+  ca: {name: 何蔓, boutique: CD}
+  client:
+    name: 郑可
+    address_as: 郑女士
+    gender: 女
+    city: 成都
+    stage: 初识
+    purchases:
+      - {product: P07, color: 黑色, date: 2026-09-10, note: 送父亲的生日礼物，烫印 Z.H.}
+    preferences: 未知
+    important_dates: {}
+    notes:
+      - 第一次购买，为父亲挑生日礼物，父亲是退休教师
+    comm_style: 礼貌
+  history:
+    - {from: ca, time: "2026-09-10 17:20", text: "郑女士，卡包已经烫好了「Z.H.」，礼盒也包好了，祝叔叔生日快乐。"}
+    - {from: client, time: "2026-09-10 17:45", text: "谢谢！他应该会喜欢"}
+    - {from: client, time: "2026-09-14 20:03", text: "我爸很喜欢，天天揣着"}
+    - {from: ca, time: "2026-09-14 20:10", text: "太好了，叔叔喜欢就好。卡包用久了边角会慢慢有光泽，那是皮子养出来的。"}
+  product_ids: []
+  event_ids: []
+  focus: 初识客户的中秋问候，可自然联系到她父亲，分寸得体
+  must_not: [推销产品]
+
+- id: S1-06
+  scenario: birthday_festive
+  occasion: 生日（与元旦同一天）
+  today: 2027-01-01
+  ca: {name: 沈悦, boutique: SH}
+  client:
+    name: 唐芸
+    address_as: 唐姐
+    gender: 女
+    city: 上海
+    stage: 挚交
+    purchases:
+      - {product: P01, color: 焦糖棕, date: 2021-03-02}
+      - {product: P02, color: 奶白, date: 2024-05-11}
+      - {product: P05, color: 珊瑚, date: 2025-07-19}
+    preferences: 暖色调，喜欢有设计感的小包
+    important_dates: {生日: 01-01}
+    notes:
+      - 生日在元旦，常开玩笑说"全世界都在给我过生日"
+      - 爱跑步，2026 年上海马拉松半程跑进了 2 小时
+      - 有两个孩子
+    comm_style: 热情，喜欢聊天
+  history:
+    - {from: client, time: "2026-11-29 13:05", text: "今天上马半程又PB了！"}
+    - {from: ca, time: "2026-11-29 13:10", text: "太厉害了唐姐！上次您说想破2小时，这次做到了吗？"}
+    - {from: client, time: "2026-11-29 13:11", text: "1小时56分！"}
+    - {from: ca, time: "2026-11-29 13:15", text: "恭喜！冬天跑步记得做好保暖。"}
+  product_ids: []
+  event_ids: []
+  focus: 生日和元旦在同一天，两者兼顾；可呼应"全世界都在给我过生日"
+  must_not: [提及年龄, 推销产品]
+
+- id: S1-07
+  scenario: birthday_festive
+  occasion: 情人节
+  today: 2027-02-14
+  ca: {name: 许哲, boutique: HZ}
+  client:
+    name: 宋雨桐
+    address_as: 宋小姐
+    gender: 女
+    city: 杭州
+    stage: 熟悉
+    purchases:
+      - {product: P04, color: 浅杏, date: 2025-02-14, note: 当时男友陪同购买}
+    preferences: 浅色系
+    important_dates: {}
+    notes:
+      - 2026 年 10 月聊天中提到已分手，说想多照顾自己
+    comm_style: 随和
+  history:
+    - {from: client, time: "2026-10-08 20:30", text: "许先生，那只浅杏色的包我想拿去做个保养"}
+    - {from: ca, time: "2026-10-08 20:34", text: "好的，您哪天方便送来？"}
+    - {from: client, time: "2026-10-08 20:36", text: "周末吧。说实话不太想看到它了，不过包是无辜的哈哈"}
+    - {from: ca, time: "2026-10-08 20:40", text: "包确实是无辜的，保养好了依然很好看。您周末来的时候我泡壶茶给您。"}
+    - {from: client, time: "2026-10-08 20:41", text: "嗯嗯，最近想多照顾一下自己"}
+  product_ids: []
+  event_ids: []
+  focus: 敏感情境：情人节问候不能涉及恋爱，不能提那只包与前任，应落在"照顾自己"
+  must_not: [提及恋爱或另一半, 提及浅杏色包的来历, 推销产品]
+
+- id: S1-08
+  scenario: birthday_festive
+  occasion: 生日
+  today: 2026-11-20
+  ca: {name: 高远, boutique: BJ}
+  client:
+    name: 梁静姝
+    address_as: 梁女士
+    gender: 女
+    city: 北京
+    stage: 熟悉
+    purchases:
+      - {product: P03, color: 黑色, date: 2025-05-16}
+    preferences: 通勤实用
+    important_dates: {生日: 11-20}
+    notes:
+      - 罗讷托特包手柄缝线开裂，10 月 9 日送修，至今未完成
+    comm_style: 直接
+  history:
+    - {from: client, time: "2026-10-09 09:12", text: "高先生，罗讷包的手柄缝线有一处开了"}
+    - {from: ca, time: "2026-10-09 09:20", text: "梁女士抱歉，您方便的话我今天下午去您公司取，送去工坊修。一般三周左右。"}
+    - {from: client, time: "2026-10-09 09:25", text: "好"}
+    - {from: client, time: "2026-11-06 18:30", text: "已经快四周了，还没好吗？"}
+    - {from: ca, time: "2026-11-06 18:45", text: "抱歉梁女士，我刚和工坊确认，手柄的皮料需要从里昂调，还需要两周左右，我会盯着进度。"}
+    - {from: client, time: "2026-11-06 18:50", text: "行吧"}
+  product_ids: []
+  event_ids: []
+  context_note: 截至今天维修仍未完成，工坊尚未给出新的完成日期
+  focus: 有未解决投诉时的生日问候：不能当作没发生，也不能编造维修进度
+  must_not: [编造维修完成日期, 推销产品, 无视维修问题]
