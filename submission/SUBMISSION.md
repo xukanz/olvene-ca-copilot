@@ -7,7 +7,7 @@
 |---|---|
 | Repository | https://github.com/xukanz/olvene-ca-copilot |
 | Live demo | https://olvene-copilot-83224434541.us-central1.run.app (v2.1; if it does not open from mainland China, please see the recording) |
-| Recording | [`assets/demo.mp4`](assets/demo.mp4) (52 s; the model's generation wait is shown at 4× speed) |
+| Recording | [`assets/demo.mp4`](assets/demo.mp4) (43 s; the model's generation wait is shown at 8× speed) |
 | Brand assumptions | [`brand/brand_guide.md`](../brand/brand_guide.md) |
 | Test set (inputs + chat screenshots) | [`eval/cases/cases.yaml`](../eval/cases/cases.yaml), screenshots in [`eval/cases/screenshots/`](../eval/cases/screenshots/) |
 | Architecture | _TODO: [`architecture.png`](architecture.png)_ |
@@ -52,7 +52,7 @@ Screenshots live in [`assets/worklog/`](assets/worklog/), named `stepNN_<topic>.
 | 8 | _TODO: run v1 on all cases_ | | | | |
 | 9 | _TODO: evaluate v1 (rules + LLM judge + human review)_ | | | | |
 | 10 | _TODO: fix defects, run v2_ | | | | |
-| 11 | _TODO: deploy to Cloud Run, record demo_ | | | | |
+| 11 | Deployed the tool to Cloud Run and recorded the demo. One container image runs in three roles: a private FastAPI service (`huashu-api`) that runs the pipeline on Vertex AI (Gemini 3.1 Pro preview for generation, Gemini 3 Flash preview for fast steps and the judge); the public Streamlit UI (`olvene-copilot`), which calls the API with its service account's ID token; and a Cloud Run job (`huashu-eval`) that runs the 50-case evaluation and writes results to Cloud Storage. To protect the public URL against cost abuse: Google sign-in, a Firestore-backed quota (20 runs per account and 200 in total per day), and at most 3 instances. Recorded one end-to-end run, cropped the browser chrome and sped the generation waits up 8× | Pipeline code (`api/`, `web/`, `eval/`), `brand/`, `Dockerfile`, `cloudbuild.yaml` | Live demo https://olvene-copilot-83224434541.us-central1.run.app; evaluation job `huashu-eval`; 43 s recording [`submission/assets/demo.mp4`](assets/demo.mp4) | Claude Code; Cloud Build, Artifact Registry, Cloud Run, Vertex AI, Secret Manager, Firestore, Cloud Storage; ffmpeg | `step11_deploy.png` |
 | 12 | _TODO: architecture diagram, final write-up_ | | | | |
 
 ---
@@ -335,7 +335,7 @@ So 2 of 7 flags were real. **j2 is now strict where j1 was lenient**: it is a go
 ## Optional material
 
 - Live demo: https://olvene-copilot-83224434541.us-central1.run.app (select a test case at the top left, then 生成 3 条话术; about 40 s per run)
-- Recording: [`assets/demo.mp4`](assets/demo.mp4): loading a test case and generating three candidates in the live demo; the two generation waits are sped up 4×
+- Recording: [`assets/demo.mp4`](assets/demo.mp4): loading a test case and generating three candidates in the live demo; the two generation waits are sped up 8×
 - Repository: https://github.com/xukanz/olvene-ca-copilot
 
 ---
