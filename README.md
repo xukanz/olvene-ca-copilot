@@ -19,7 +19,7 @@ An AI tool that drafts three on-brand Chinese WeChat messages (话术) for luxur
 | | |
 |---|---|
 | Live demo | https://olvene-copilot-83224434541.us-central1.run.app — pick a test case at the top left, then 生成 3 条话术 (about 40 s). If it does not open from mainland China, please see the recording |
-| Recording | _TODO: link_ |
+| Recording | [`submission/assets/demo.mp4`](submission/assets/demo.mp4): loading a test case and generating three candidates in the live demo (43 s; the generation waits are shown at 8× speed) |
 | Brand assumptions | [`brand/brand_guide.md`](brand/brand_guide.md) (voice, red lines, scenario playbooks), [`brand/catalog.yaml`](brand/catalog.yaml) (products, services, events) |
 | Test set | [`eval/cases/cases.yaml`](eval/cases/cases.yaml) and the rendered WeChat screenshots in [`eval/cases/screenshots/`](eval/cases/screenshots/) |
 | Raw results | [`eval/results/final.jsonl`](eval/results/final.jsonl): every flag, score, judge comment and latency |
