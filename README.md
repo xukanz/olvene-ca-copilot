@@ -1,9 +1,8 @@
 
 # Olvène CA Copilot
 
-An AI tool that drafts three on-brand Chinese WeChat messages (话术) for luxury Client Advisors (CAs), across six scenarios: birthday and festive greetings, product recommendation, post-purchase care, reactivation, event invitation, and price objection. The CA picks one, edits it if needed, and sends it; the tool never sends anything.
+An AI tool that drafts three on-brand Chinese WeChat messages (话术) for luxury Client Advisors (CAs), across six scenarios: birthday and festive greetings, product recommendation, post-purchase care, reactivation, event invitation, and price objection.
 
-> Applied AI Engineer written challenge · submitted 2026-11-09.
 > The brand **Maison Olvène 欧薇恩** and all products, boutiques, events and clients in this repository are fictional.
 
 ## Demo
