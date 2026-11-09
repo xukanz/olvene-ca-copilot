@@ -43,8 +43,8 @@ Screenshots live in [`docs/screenshots/`](docs/screenshots/), named `stepNN_<top
 | 3 | Self-tested the rule checker against the good/bad examples in the brand guide | Brand guide examples, rule file | Found 2 rule defects (E-D01, E-D02) and fixed them | Claude Code, Python | `step03_rule_test.png` |
 | 4 | Set up the repository | Brand files | GitHub repository | Claude Code, GitHub | `step04_repo.png` |
 | 5 | Drafted this submission framework | Brief's required elements | `SUBMISSION.md` | Claude Code | `step05_framework.png` |
-| 6 | _TODO: build generation pipeline_ | | | | |
-| 7 | _TODO: design and generate 50 test cases_ | | | | |
+| 6 | Designed and wrote the 50-case test set; rendered each conversation history as a WeChat-style screenshot | Brand guide, catalog, coverage matrix (B2) | `test_set/cases/*.yaml`, `test_set/cases.json`, 50 screenshots in `test_set/screenshots/`, index `test_set/README.md`; validator checks IDs, catalog references, colours, dates | Claude Code, Python, Playwright | `step06_test_set.png` |
+| 7 | _TODO: build generation pipeline (incl. screenshot reading)_ | | | | |
 | 8 | _TODO: run v1 on all cases_ | | | | |
 | 9 | _TODO: evaluate v1 (rules + LLM judge + human review)_ | | | | |
 | 10 | _TODO: fix defects, run v2_ | | | | |
@@ -99,14 +99,20 @@ Screenshots live in [`docs/screenshots/`](docs/screenshots/), named `stepNN_<top
 - Communication preference: prefers short messages, no emoji, English name, etc.
 - Scenario-specific variable: festival type (S1), product category and need (S2), time since purchase and product (S3), length of silence and past preference (S4), event type and invitation rules (S5), objection type — too expensive / cross-region price / direct discount request / competitor or daigou comparison (S6)
 
-**Edge and adversarial cases.** _TODO: list case IDs_
-- Birthday falls on a festival
-- Post-purchase follow-up when the client complained in the history
-- Client pushes for a discount a second time
-- Client with almost no profile information
-- Event that does not allow a companion, client asks to bring one
+**Edge and adversarial cases**
+- Sparse profile, nothing to personalise with: S1-02, S2-05, S4-05
+- Open complaint or bad history: S1-08 (birthday during an unfinished repair), S3-05 (scratched hardware), S4-04 (last chat ended with a cancelled order), S4-08 (CA never replied)
+- Sensitive life context: S1-07 (Valentine's Day after a break-up), S4-06 (new baby)
+- Facts the model must not invent: S2-09 (colour only on 6-week order), S3-07 (bespoke progress), S6-07 (no cheaper scarf exists), S6-09 (price increase not in the catalog), S1-08 (no repair date)
+- Rules hidden in event data: S5-02 (no companion allowed, client always brings her sister), S5-06 (single Saturday session, client busy at weekends)
+- Low purchase intent: S2-08 (client said no more bags this year)
+- Second discount push: S6-06; gift-in-lieu request: S6-08; long-time client asks for a discount: S6-03
+- Unanswered client question in history: S3-06
+- Style constraints: S1-04, S3-08 (short, no emoji); S1-03, S2-07, S6-09 (English name)
 
-**How cases were produced.** _TODO: LLM-drafted from the coverage matrix, then reviewed and edited by hand_
+**Conversation history as screenshots.** Each case keeps its history as structured text (ground truth) and as a WeChat-style screenshot rendered from it (`scripts/render_chats.js`). The tool takes the screenshot as input, as a CA would forward it; comparing its reading against the text measures screenshot parsing separately from message quality.
+
+**How cases were produced.** Drafted with Claude Code from the coverage matrix above, reviewed by hand, and validated automatically against the catalog (`scripts/build_test_set.py`). Full index: [`test_set/README.md`](test_set/README.md).
 
 ### B3. Evaluation method
 

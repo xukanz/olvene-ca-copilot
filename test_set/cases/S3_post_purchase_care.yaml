@@ -1,0 +1,206 @@
+# S3 · 售后关怀（8 个用例）
+
+- id: S3-01
+  scenario: post_purchase_care
+  today: 2026-11-09
+  ca: {name: 沈悦, boutique: SH}
+  client:
+    name: 林悦
+    address_as: 林小姐
+    gender: 女
+    city: 上海
+    stage: 初识
+    purchases:
+      - {product: P02, color: 黑色, date: 2026-10-26, note: 烫印 L.Y.}
+    preferences: 未知
+    important_dates: {}
+    notes: []
+    comm_style: 礼貌
+  history:
+    - {from: ca, time: "2026-10-26 18:10", text: "林小姐，谢谢您今天来。烫印「L.Y.」三天后可以取，好了我通知您。"}
+    - {from: client, time: "2026-10-26 18:30", text: "好的"}
+    - {from: client, time: "2026-10-29 19:02", text: "取到啦，很喜欢"}
+  product_ids: [P02]
+  event_ids: []
+  focus: 购买两周后的标准售后关怀，给出与沙漏包相关的实用保养建议
+  must_not: [推销新品]
+
+- id: S3-02
+  scenario: post_purchase_care
+  today: 2026-11-06
+  ca: {name: 高远, boutique: BJ}
+  client:
+    name: 周敏
+    address_as: 周女士
+    gender: 女
+    city: 北京
+    stage: 熟悉
+    purchases:
+      - {product: P01, color: 雾灰, date: 2024-04-02}
+      - {product: P03, color: 深海军蓝, date: 2026-10-05}
+    preferences: 职业风格
+    important_dates: {}
+    notes:
+      - 律师，罗讷托特包用于通勤
+    comm_style: 简洁
+  history:
+    - {from: ca, time: "2026-10-05 17:00", text: "周女士，谢谢您。罗讷包可以放下14寸电脑，内袋拆下来就能单独用。"}
+    - {from: client, time: "2026-10-08 20:15", text: "今天第一天背去所里，同事都问哪里买的"}
+    - {from: ca, time: "2026-10-08 20:20", text: "哈哈，那说明您背得好看。"}
+  product_ids: [P03]
+  event_ids: []
+  focus: 通勤包使用一个月后的关怀，可呼应同事的反应
+  must_not: [推销新品]
+
+- id: S3-03
+  scenario: post_purchase_care
+  today: 2026-11-08
+  ca: {name: 何蔓, boutique: CD}
+  client:
+    name: 何欣
+    address_as: 何女士
+    gender: 女
+    city: 成都
+    stage: 初识
+    purchases:
+      - {product: P06, color: 灰蓝, date: 2026-11-01, note: 送妈妈的礼物}
+    preferences: 未知
+    important_dates: {}
+    notes:
+      - 披肩是送给妈妈的，周末回家给她
+    comm_style: 礼貌
+  history:
+    - {from: client, time: "2026-11-01 14:30", text: "礼盒帮我包好看一点，周末回家给我妈"}
+    - {from: ca, time: "2026-11-01 14:50", text: "好的，已经包好了，祝阿姨喜欢。"}
+  product_ids: [P06]
+  event_ids: []
+  focus: 礼物售后：关心收礼人（妈妈）是否喜欢，给出披肩的保养建议
+  must_not: [推销新品, 假设妈妈已经喜欢]
+
+- id: S3-04
+  scenario: post_purchase_care
+  today: 2026-11-05
+  ca: {name: 许哲, boutique: HZ}
+  client:
+    name: 吴迪
+    address_as: 吴先生
+    gender: 男
+    city: 杭州
+    stage: 熟悉
+    purchases:
+      - {product: P09, color: 黑色, date: 2026-08-01}
+    preferences: 商务
+    important_dates: {}
+    notes:
+      - 每天开车通勤，公文包常放在副驾
+    comm_style: 简洁
+  history:
+    - {from: ca, time: "2026-08-01 16:00", text: "吴先生，谢谢您。公文包内侧有匠人编号，是这只包独一份的标记。"}
+    - {from: client, time: "2026-08-01 16:20", text: "收到，挺有意思"}
+  product_ids: [P09]
+  event_ids: []
+  focus: 购买三个月后的关怀，可提醒免费基础保养；可结合"放副驾"给出实用建议（如避免暴晒）
+  must_not: [推销新品]
+
+- id: S3-05
+  scenario: post_purchase_care
+  today: 2026-11-03
+  ca: {name: 沈悦, boutique: SH}
+  client:
+    name: 白露
+    address_as: 白女士
+    gender: 女
+    city: 上海
+    stage: 熟悉
+    purchases:
+      - {product: P04, color: 浅杏, date: 2026-10-20}
+    preferences: 浅色系
+    important_dates: {}
+    notes: []
+    comm_style: 直接
+  history:
+    - {from: client, time: "2026-11-02 19:40", text: "沈小姐，索恩包肩带的金属扣上有几道划痕，才背了两周"}
+    - {from: client, time: "2026-11-02 19:41", text: "有点失望"}
+    - {from: ca, time: "2026-11-02 19:50", text: "白女士，非常抱歉，我先跟售后确认处理方式，明天之内回复您。"}
+  product_ids: [P04]
+  event_ids: []
+  context_note: 售后已确认可以免费更换肩带五金，约 10 个工作日完成，可上门取件
+  focus: 售后投诉：先道歉并回应情绪，再准确传达处理方案
+  must_not: [推销新品, 推卸责任, 编造方案之外的补偿]
+
+- id: S3-06
+  scenario: post_purchase_care
+  today: 2026-11-06
+  ca: {name: 高远, boutique: BJ}
+  client:
+    name: 杜若
+    address_as: 杜女士
+    gender: 女
+    city: 北京
+    stage: 初识
+    purchases:
+      - {product: P06, color: 驼色, date: 2026-11-01}
+    preferences: 未知
+    important_dates: {}
+    notes: []
+    comm_style: 未知
+  history:
+    - {from: ca, time: "2026-11-01 15:00", text: "杜女士，谢谢您今天来，冬天用这条披肩会很暖和。"}
+    - {from: client, time: "2026-11-06 21:30", text: "请问这个披肩能自己手洗吗？"}
+  product_ids: [P06]
+  event_ids: []
+  focus: 客户有未回复的问题：必须先准确回答（建议专业干洗，不建议自己洗）
+  must_not: [说可以手洗, 推销新品]
+
+- id: S3-07
+  scenario: post_purchase_care
+  today: 2026-11-03
+  ca: {name: 沈悦, boutique: SH}
+  client:
+    name: 唐芸
+    address_as: 唐姐
+    gender: 女
+    city: 上海
+    stage: 挚交
+    purchases:
+      - {product: P01, color: 焦糖棕, date: 2021-03-02}
+      - {product: P02, color: 奶白, date: 2024-05-11}
+      - {product: P12, color: 定制, date: 2026-09-10, note: 定制手袋，制作中}
+    preferences: 暖色调
+    important_dates: {生日: 01-01}
+    notes:
+      - 定制手袋 2026 年 9 月下单
+    comm_style: 热情
+  history:
+    - {from: client, time: "2026-11-01 22:00", text: "我的定制包进度怎么样啦？好期待"}
+    - {from: ca, time: "2026-11-01 22:10", text: "我明天问一下工坊，有消息马上告诉您。"}
+  product_ids: [P12]
+  event_ids: []
+  context_note: 工坊回复：皮料已裁切完成，正在缝制，按计划 2027 年 3 月交付
+  focus: 准确传达定制进度，不夸大、不另加承诺
+  must_not: [编造进度细节, 承诺提前交付]
+
+- id: S3-08
+  scenario: post_purchase_care
+  today: 2026-11-10
+  ca: {name: 许哲, boutique: HZ}
+  client:
+    name: 钟琪
+    address_as: 钟女士
+    gender: 女
+    city: 杭州
+    stage: 熟悉
+    purchases:
+      - {product: P05, color: 湖蓝, date: 2025-05-01}
+      - {product: P04, color: 浅杏, date: 2026-10-28}
+    preferences: 浅色
+    important_dates: {}
+    notes: []
+    comm_style: 简短，不用表情
+  history:
+    - {from: ca, time: "2026-10-28 17:30", text: "钟女士，谢谢您，索恩包有问题随时找我。"}
+    - {from: client, time: "2026-10-28 17:50", text: "嗯"}
+  product_ids: [P04]
+  event_ids: []
+  focus: 简短、不用表情；给一条与光面皮相关的保养建议
+  must_not: [使用表情, 长消息, 推销新品]
