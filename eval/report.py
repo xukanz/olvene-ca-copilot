@@ -85,7 +85,10 @@ def _num(x):
     return "—" if x is None else f"{x}"
 
 
-def chart_scenarios(versions: list[str], per: dict[str, dict], path: Path) -> None:
+def chart_scenarios(
+    versions: list[str], per: dict[str, dict], path: Path, metric: str = "mean_weighted", labels: dict | None = None
+) -> None:
+    pct = metric.endswith("_rate")
     _cjk_font()
     fig, ax = plt.subplots(figsize=(8, 3.6), dpi=160)
     fig.patch.set_facecolor(SURFACE)
@@ -94,15 +97,20 @@ def chart_scenarios(versions: list[str], per: dict[str, dict], path: Path) -> No
     width = 0.8 / n
     xs = range(len(SCENARIO_LABELS))
     for k, v in enumerate(versions):
-        vals = [per[v][sc]["mean_weighted"] or 0 for sc in SCENARIO_LABELS]
+        vals = [(per[v][sc][metric] or 0) * (100 if pct else 1) for sc in SCENARIO_LABELS]
         pos = [x - 0.4 + width * (k + 0.5) for x in xs]
-        bars = ax.bar(pos, vals, width - 0.03, color=SERIES[k], label=v, zorder=2)
+        bars = ax.bar(pos, vals, width - 0.03, color=SERIES[k], label=(labels or {}).get(v, v), zorder=2)
         for b, val in zip(bars, vals):
             if val:
-                ax.text(b.get_x() + b.get_width() / 2, val + 0.05, f"{val:.2f}", ha="center", fontsize=7, color=INK2)
+                ax.text(b.get_x() + b.get_width() / 2, val + (1 if pct else 0.05), f"{val:.0f}%" if pct else f"{val:.2f}",
+                        ha="center", fontsize=7, color=INK2)
     ax.set_xticks(list(xs), [f"{SC_SHORT[s]} {SCENARIO_LABELS[s]}" for s in SCENARIO_LABELS], fontsize=8, color=INK)
-    ax.set_ylim(1, 5.3)
-    ax.set_ylabel("加权平均分 (1–5)", fontsize=8, color=INK2)
+    if pct:
+        ax.set_ylim(0, 112)
+        ax.set_ylabel("可直接发送率 (%)", fontsize=8, color=INK2)
+    else:
+        ax.set_ylim(1, 5.3)
+        ax.set_ylabel("加权平均分 (1–5)", fontsize=8, color=INK2)
     ax.grid(axis="y", color=GRID, linewidth=0.6, zorder=0)
     for s in ("top", "right", "left"):
         ax.spines[s].set_visible(False)
@@ -110,7 +118,7 @@ def chart_scenarios(versions: list[str], per: dict[str, dict], path: Path) -> No
     ax.tick_params(axis="y", labelsize=7, colors=INK2, length=0)
     if n > 1:
         ax.legend(frameon=False, fontsize=8, loc="upper left", ncols=n)
-    ax.set_title("各场景 LLM judge 加权平均分", fontsize=10, color=INK, loc="left")
+    ax.set_title("各场景可直接发送率（LLM judge j2）" if pct else "各场景 LLM judge 加权平均分", fontsize=10, color=INK, loc="left")
     fig.tight_layout()
     fig.savefig(path, facecolor=SURFACE)
     plt.close(fig)

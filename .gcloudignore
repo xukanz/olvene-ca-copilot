@@ -6,3 +6,4 @@
 eval/results/
 *.pdf
 方案规划.md
+.streamlit/secrets.toml

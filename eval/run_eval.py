@@ -239,12 +239,14 @@ def main() -> None:
     records.sort(key=lambda r: r["case_id"])
 
     suffix = "" if not a.only else "_partial"
-    base = RESULTS / f"{a.version}{suffix}"
-    base.with_suffix(".jsonl").write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in records) + "\n")
+    name = f"{a.version}{suffix}"
+    # Not Path.with_suffix: version names like "v2.1" contain a dot and would be truncated to "v2".
+    out = {ext: RESULTS / f"{name}.{ext}" for ext in ("jsonl", "csv", "xlsx")}
+    out["jsonl"].write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in records) + "\n")
     df = to_table(records, by_id)
-    df.to_csv(base.with_suffix(".csv"), index=False, encoding="utf-8-sig")
-    df.to_excel(base.with_suffix(".xlsx"), index=False)
-    print(f"wrote {base}.jsonl / .csv / .xlsx ({len(records)} cases)")
+    df.to_csv(out["csv"], index=False, encoding="utf-8-sig")
+    df.to_excel(out["xlsx"], index=False)
+    print(f"wrote {RESULTS / name}.jsonl / .csv / .xlsx ({len(records)} cases)")
 
 
 if __name__ == "__main__":

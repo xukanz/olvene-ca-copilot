@@ -4,3 +4,8 @@ __pycache__/
 .venv/
 .DS_Store
 .pytest_cache/
+.streamlit/secrets.toml
+
+# Private: challenge brief and planning notes, never commit
+Written_Challenge_Brief.pdf
+方案规划.md

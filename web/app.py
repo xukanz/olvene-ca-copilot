@@ -22,11 +22,25 @@ sys.path.insert(0, str(ROOT))
 from api.brand import load_brand  # noqa: E402
 from api.cases import case_to_request, load_cases, screenshot_paths  # noqa: E402
 from api.schemas import SCENARIO_ANGLES, SCENARIO_LABELS, DialogTurn, GenerateRequest  # noqa: E402
+from web.quota import GLOBAL_DAILY_LIMIT, USER_DAILY_LIMIT, QuotaExceeded, get_quota  # noqa: E402
 
 API_URL = os.environ.get("API_URL", "").rstrip("/")
 FEEDBACK_LOG = Path(os.environ.get("FEEDBACK_LOG", "/tmp/olvene_feedback.jsonl"))
+# REQUIRE_LOGIN=1 gates the app behind Google sign-in (st.login, OIDC config in .streamlit/secrets.toml).
+REQUIRE_LOGIN = os.environ.get("REQUIRE_LOGIN", "0") == "1"
 
 st.set_page_config(page_title="Olvène CA Copilot", page_icon="🌿", layout="wide")
+
+
+# ------------------------------------------------------------------ sign-in gate
+if REQUIRE_LOGIN and not st.user.get("is_logged_in"):
+    st.markdown("### 🌿 Olvène CA Copilot")
+    st.write("请使用 Google 账号登录后使用。")
+    st.button("使用 Google 登录", type="primary", on_click=st.login)
+    st.page_link("pages/privacy.py", label="隐私说明 / Privacy")
+    st.stop()
+USER = (st.user.get("email") or "unknown").lower() if REQUIRE_LOGIN else "local"
+
 brand = load_brand()
 
 
@@ -45,6 +59,7 @@ def _id_token() -> dict:
 
 
 def call(path: str, req: GenerateRequest) -> dict:
+    get_quota().consume(USER)  # raises QuotaExceeded; every call below hits the LLM
     if API_URL:
         import httpx
 
@@ -156,6 +171,16 @@ def build_request(with_dialog: bool = True) -> GenerateRequest:
 st.markdown("### 🌿 Olvène CA Copilot · 微信话术助手")
 st.caption("Maison Olvène 欧薇恩为虚构品牌；所有客户、产品、活动均为虚构。工具只生成草稿，由 CA 选择、修改后发送。")
 
+with st.sidebar:
+    try:
+        mine, total = get_quota().used(USER)
+        st.caption(f"今日用量：{mine} / {USER_DAILY_LIMIT}（全站 {total} / {GLOBAL_DAILY_LIMIT}）")
+    except Exception:  # quota display must never take the page down
+        pass
+    if REQUIRE_LOGIN:
+        st.caption(f"已登录：{USER}")
+        st.button("退出登录", on_click=st.logout)
+
 left, mid, right = st.columns([1.05, 1.25, 1.5], gap="large")
 
 with left:
@@ -210,6 +235,8 @@ with mid:
                     an = call("/v1/parse", req)["analysis"]
                     ss.analysis = an
                     ss.dialog_df = pd.DataFrame(an["dialog"], columns=DIALOG_COLS).astype(object).fillna("")
+                except QuotaExceeded as e:
+                    st.warning(str(e))
                 except Exception as e:
                     st.error(f"解析失败：{e}")
     if ss.analysis:
@@ -238,6 +265,8 @@ with right:
         with st.spinner("生成并检查中…"):
             try:
                 ss.result = call("/v1/generate", build_request())
+            except QuotaExceeded as e:
+                st.warning(str(e))
             except Exception as e:
                 st.error(f"生成失败：{e}")
     res = ss.result

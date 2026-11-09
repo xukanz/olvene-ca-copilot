@@ -12,15 +12,16 @@ The brand **Maison Olvène 欧薇恩** and all products, boutiques, events and c
 |---|---|
 | `submission/` | Deliverables: main document, results spreadsheet, architecture diagram, screenshots |
 | `brand/` | Fictional brand foundation (inputs to the tool) |
-| `test_set/` | 50 test cases as YAML/JSON, with WeChat-style chat screenshots |
-| `scripts/` | Test set validation and screenshot rendering |
+| `eval/cases/` | The 50 test cases (`cases.yaml`) and their WeChat-style chat screenshots |
+| `eval/results/` | Every evaluation run (v1, v1_j2, v2, v2.1), reports, human review notes |
+| `archive/` | Early draft of the test set, superseded by `eval/cases/` |
 
-## Brand foundation
+## Code
 
 | Path | Purpose |
 |---|---|
 | `brand/` | Brand guide (voice, red lines, playbooks, few-shot examples), machine-checkable rules, catalog (the only allowed source of product and event facts), festival calendar |
-| `api/` | FastAPI service and the four-step pipeline (`api/pipeline/`), versioned prompts (`api/prompts/v1/`), CLI |
+| `api/` | FastAPI service and the four-step pipeline (`api/pipeline/`), versioned prompts (`api/prompts/v1/`, `v2/`), CLI |
 | `web/` | Streamlit UI for CAs |
 | `eval/` | 50 test cases, WeChat screenshot renderer, batch runner, LLM judge, report, human-review agreement |
 | `tests/` | Rule-checker tests against the brand guide examples, mock-mode end-to-end tests |
@@ -37,7 +38,7 @@ LLM_MODE=mock .venv/bin/streamlit run web/app.py
 
 # Real Gemini on Vertex AI
 gcloud auth application-default login
-export GOOGLE_CLOUD_PROJECT=<project> GOOGLE_CLOUD_LOCATION=us-central1
+export GOOGLE_CLOUD_PROJECT=<project> GOOGLE_CLOUD_LOCATION=global
 .venv/bin/python -m api.cli eval/cases/cases.yaml S6-02          # one test case
 .venv/bin/uvicorn api.main:app --reload                          # API on :8000
 .venv/bin/streamlit run web/app.py                               # UI, runs pipeline in-process
@@ -67,6 +68,17 @@ gcloud iam service-accounts create huashu-sa
 gcloud projects add-iam-policy-binding $PROJECT --role roles/aiplatform.user \
   --member serviceAccount:huashu-sa@$PROJECT.iam.gserviceaccount.com
 gcloud storage buckets create gs://$PROJECT-olvene-eval --location $REGION
+# web: Google sign-in + daily caps (counters in Firestore)
+gcloud services enable firestore.googleapis.com secretmanager.googleapis.com
+gcloud firestore databases create --location $REGION
+gcloud projects add-iam-policy-binding $PROJECT --role roles/datastore.user \
+  --member serviceAccount:huashu-sa@$PROJECT.iam.gserviceaccount.com
+# OAuth client (console only): Google Auth Platform → Clients → Web application,
+# redirect URI https://olvene-copilot-<PROJECT_NUMBER>.$REGION.run.app/oauth2callback; publish the app (In production).
+# Fill .streamlit/secrets.toml.example, then:
+gcloud secrets create olvene-web-auth --data-file .streamlit/secrets.toml
+gcloud secrets add-iam-policy-binding olvene-web-auth --role roles/secretmanager.secretAccessor \
+  --member serviceAccount:huashu-sa@$PROJECT.iam.gserviceaccount.com
 gcloud storage buckets add-iam-policy-binding gs://$PROJECT-olvene-eval --role roles/storage.objectAdmin \
   --member serviceAccount:huashu-sa@$PROJECT.iam.gserviceaccount.com
 gcloud builds submit --config cloudbuild.yaml --substitutions _REGION=$REGION
