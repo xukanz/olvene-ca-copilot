@@ -7,7 +7,7 @@
 |---|---|
 | Repository | https://github.com/xukanz/olvene-ca-copilot |
 | Live demo | https://olvene-copilot-83224434541.us-central1.run.app (v2.1; if it does not open from mainland China, please see the recording) |
-| Recording | _TODO: link_ |
+| Recording | [`assets/demo.mp4`](assets/demo.mp4) (52 s; the model's generation wait is shown at 4× speed) |
 | Brand assumptions | [`brand/brand_guide.md`](../brand/brand_guide.md) |
 | Test set (inputs + chat screenshots) | [`eval/cases/cases.yaml`](../eval/cases/cases.yaml), screenshots in [`eval/cases/screenshots/`](../eval/cases/screenshots/) |
 | Architecture | _TODO: [`architecture.png`](architecture.png)_ |
@@ -335,7 +335,7 @@ So 2 of 7 flags were real. **j2 is now strict where j1 was lenient**: it is a go
 ## Optional material
 
 - Live demo: https://olvene-copilot-83224434541.us-central1.run.app (select a test case at the top left, then 生成 3 条话术; about 40 s per run)
-- Recording: _TODO_
+- Recording: [`assets/demo.mp4`](assets/demo.mp4): loading a test case and generating three candidates in the live demo; the two generation waits are sped up 4×
 - Repository: https://github.com/xukanz/olvene-ca-copilot
 
 ---
