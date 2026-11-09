@@ -8,6 +8,7 @@ import yaml
 from ..brand import Brand
 from ..prompts import render
 from ..schemas import CARE_ANGLES, SCENARIO_ANGLES, SCENARIO_LABELS, DialogAnalysis, GenerateRequest
+from .dialog_state import DialogState, compute_state
 from .parse_screenshot import format_dialog
 
 
@@ -23,6 +24,7 @@ class Context:
     product_ids: list[str]  # products whose facts are allowed (requested + matched from purchases)
     emoji_max: int
     care_mode: bool
+    state: DialogState | None = None
     notes: list[str] = field(default_factory=list)
 
 
@@ -140,6 +142,7 @@ def build_context(brand: Brand, req: GenerateRequest, analysis: DialogAnalysis, 
     facts = render_facts(brand, req, product_ids)
     client_text = render_client(req)
     dialog_text = format_dialog(analysis.dialog)
+    state = compute_state(analysis.dialog, req.client, req.context.today)
 
     fests = brand.festivals_near(req.context.today)
     cal_lines = []
@@ -167,6 +170,7 @@ def build_context(brand: Brand, req: GenerateRequest, analysis: DialogAnalysis, 
         client_sentiment=analysis.client_sentiment,
         open_questions="；".join(analysis.open_questions) or "无",
         dialog=dialog_text,
+        dialog_state=state.text,
         facts=facts,
         calendar="\n".join(cal_lines) or "近期无节日",
         extra=f"CA 补充说明：{req.context.extra}" if req.context.extra else "",
@@ -182,5 +186,6 @@ def build_context(brand: Brand, req: GenerateRequest, analysis: DialogAnalysis, 
         product_ids=product_ids,
         emoji_max=emax,
         care_mode=care_mode,
+        state=state,
         notes=notes,
     )

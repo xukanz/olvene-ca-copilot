@@ -75,6 +75,12 @@ def run_pipeline(req: GenerateRequest, settings: Settings | None = None, llm: LL
         CandidateOut(**c.model_dump(), passed=i not in failing, char_count=char_len(c.text)) for i, c in enumerate(cands)
     ]
     info = [Flag(level="info", code="care_mode", detail=n) for n in ctx.notes]
+    unseen = [t.text for t in analysis.dialog if t.speaker == "client" and (
+        (t.type == "voice" and not t.transcript) or t.type == "image")]
+    if unseen:
+        info.append(Flag(level="info", code="unseen_media", detail=(
+            f"客户发了工具无法读取的内容（{'、'.join(unseen)}）。请先查看；如果内容重要，"
+            "用微信“转文字”后重新截图，或在对话表里补充文字，再重新生成。")))
     if analysis.parse_confidence != "high" and (req.dialog_screenshots and req.dialog is None):
         info.append(
             Flag(level="info", code="parse_confidence", detail=f"截图解析置信度 {analysis.parse_confidence}：{analysis.parse_notes}")

@@ -64,7 +64,8 @@ def call(path: str, req: GenerateRequest) -> dict:
 
 # ------------------------------------------------------------------ state helpers
 ss = st.session_state
-ss.setdefault("dialog_df", pd.DataFrame(columns=["speaker", "time", "text", "type"]))
+DIALOG_COLS = ["speaker", "time", "text", "type", "transcript"]
+ss.setdefault("dialog_df", pd.DataFrame(columns=DIALOG_COLS))
 ss.setdefault("analysis", None)
 ss.setdefault("result", None)
 ss.setdefault("shots", [])
@@ -98,7 +99,7 @@ def load_case(cid: str) -> None:
             "today": date.fromisoformat(str(c["context"]["today"])),
             "occasion": c["context"].get("occasion") or "",
             "ca_name": c["context"].get("ca_name") or "",
-            "dialog_df": pd.DataFrame(c.get("dialog") or [], columns=["speaker", "time", "text", "type"]).fillna(""),
+            "dialog_df": pd.DataFrame(c.get("dialog") or [], columns=DIALOG_COLS).astype(object).fillna(""),
             "shots": [str(p) for p in screenshot_paths(cid)] if c.get("screenshot") else [],
             "analysis": None,
             "result": None,
@@ -118,7 +119,13 @@ def build_request(with_dialog: bool = True) -> GenerateRequest:
     if with_dialog:
         df = ss.dialog_df.fillna("")
         dialog = [
-            DialogTurn(speaker=r["speaker"] or "client", time=str(r["time"]) or None, text=str(r["text"]), type=r["type"] or "text")
+            DialogTurn(
+                speaker=r["speaker"] or "client",
+                time=str(r["time"]) or None,
+                text=str(r["text"]),
+                type=r["type"] or "text",
+                transcript=str(r.get("transcript") or "") or None,
+            )
             for _, r in df.iterrows()
             if str(r["text"]).strip()
         ]
@@ -202,7 +209,7 @@ with mid:
                 try:
                     an = call("/v1/parse", req)["analysis"]
                     ss.analysis = an
-                    ss.dialog_df = pd.DataFrame(an["dialog"], columns=["speaker", "time", "text", "type"]).fillna("")
+                    ss.dialog_df = pd.DataFrame(an["dialog"], columns=DIALOG_COLS).astype(object).fillna("")
                 except Exception as e:
                     st.error(f"解析失败：{e}")
     if ss.analysis:
@@ -219,6 +226,7 @@ with mid:
             "time": st.column_config.TextColumn("时间", width="small"),
             "text": st.column_config.TextColumn("内容", width="large"),
             "type": st.column_config.SelectboxColumn("类型", options=["text", "image", "voice", "sticker", "recall"]),
+            "transcript": st.column_config.TextColumn("语音转文字", help="语音消息在微信里“转文字”后的内容；没有就留空"),
         },
         key="dialog_editor",
     )
@@ -242,7 +250,7 @@ with right:
             st.warning("客户尚未被回应：" + "；".join(res["open_questions"]))
         flags = res["checks"]["flags"]
         for f in flags:
-            if f["code"] in ("care_mode", "parse_confidence"):
+            if f["code"] in ("care_mode", "parse_confidence", "unseen_media"):
                 st.warning(f["detail"])
         for i, c in enumerate(res["candidates"]):
             with st.container(border=True):

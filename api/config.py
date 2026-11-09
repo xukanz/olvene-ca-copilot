@@ -28,7 +28,7 @@ class Settings:
     gen_temperature: float = field(default_factory=lambda: float(_env("GEN_TEMPERATURE", "0.8")))
     max_rewrites: int = field(default_factory=lambda: int(_env("MAX_REWRITES", "2")))
     llm_review: bool = field(default_factory=lambda: _env("LLM_REVIEW", "1") == "1")
-    prompt_version: str = field(default_factory=lambda: _env("PROMPT_VERSION", "v1"))
+    prompt_version: str = field(default_factory=lambda: _env("PROMPT_VERSION", "v2"))
     brand_dir: Path = field(default_factory=lambda: Path(_env("BRAND_DIR", str(ROOT / "brand"))))
     log_dir: Path | None = field(
         default_factory=lambda: Path(os.environ["LOG_DIR"]) if os.environ.get("LOG_DIR") else None

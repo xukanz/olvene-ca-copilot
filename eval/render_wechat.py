@@ -81,7 +81,8 @@ def _wrap(text: str, width: int) -> list[str]:
             cur, cw = "", 0
             continue
         w = _char_w(ch)
-        if cw + w > width and cur:
+        # Line-start prohibition: closing punctuation stays on the current line, like WeChat.
+        if cw + w > width and cur and ch not in "，。、；：？！）」』”’,.;:?!)":
             lines.append(cur)
             cur, cw = "", 0
         cur += ch
@@ -164,6 +165,8 @@ def render(turns: list[dict], title: str, group: bool = False, client_nick: str 
             h = 150
         else:
             h = len(_wrap(t["text"], BUBBLE_MAX - 40)) * 42 + 30
+        if typ == "voice" and t.get("transcript"):
+            h += 12 + len(_wrap(t["transcript"], BUBBLE_MAX - 40)) * 42 + 24
         if group and t["speaker"] != "ca":
             h += 30
         heights.append(max(h, AVATAR) + 28)
@@ -219,8 +222,21 @@ def render(turns: list[dict], title: str, group: bool = False, client_nick: str 
             d.polygon(tip, fill=GREEN if mine else WHITE)
             for i, ln in enumerate(lines):
                 _draw_text(d, (bx + 20, by + 13 + i * 42), ln)
+            if typ == "voice" and t.get("transcript"):
+                _draw_transcript(d, t["transcript"], ax, by + bh + 12, mine)
         y += h
     return img
+
+
+def _draw_transcript(d: ImageDraw.ImageDraw, text: str, ax: int, ty: int, mine: bool) -> None:
+    """WeChat 语音转文字: a light rounded box under the voice bubble, no tail, same side as the speaker."""
+    lines = _wrap(text, BUBBLE_MAX - 40)
+    tw = max(sum(_char_w(c) for c in ln) for ln in lines)
+    bw, bh = tw + 36, len(lines) * 42 + 20
+    bx = ax - 20 - bw if mine else ax + AVATAR + 20
+    d.rounded_rectangle([bx, ty, bx + bw, ty + bh], radius=10, fill=(247, 247, 247), outline=(222, 222, 222))
+    for i, ln in enumerate(lines):
+        _draw_text(d, (bx + 18, ty + 10 + i * 42), ln)
 
 
 GROUP_FILLERS = [
