@@ -8,25 +8,28 @@ An AI tool that drafts three on-brand Chinese WeChat messages (话术) for luxur
 
 ## Demo
 
+**Live demo:** https://olvene-copilot-83224434541.us-central1.run.app.
+
+**Recording:** Recording of the live app ([MP4](submission/assets/demo.mp4)): load test case S1-02, generate three candidate messages, choose one, then regenerate. 
+
 https://github.com/user-attachments/assets/b1bd5707-230b-4cea-80a8-1e949c4d28b4
 
-Recording of the live app ([MP4](submission/assets/demo.mp4)): load test case S1-02, generate three candidate messages, choose one, then regenerate. 
 
 ## Submission
 
-| Part | File | What it contains |
-|---|---|---|
-| A. Work log | [`submission/A_worklog.md`](submission/A_worklog.md) | Every step from reading the brief to the final result: what I did, input, output, AI tool used, screenshots |
-| B. Methodology | [`submission/B_methodology.md`](submission/B_methodology.md) | Brand assumptions, tool design, how the test set was built, how results were evaluated, what "good" and "not acceptable" mean |
-| C. 50 test cases | [`submission/C_test_cases.xlsx`](submission/C_test_cases.xlsx) · [`.md`](submission/C_test_cases.md) | Input and the three outputs of the final tool for every case, in the brief's columns |
+| Part | File | 
+|---|---|
+| A. Work log | [`submission/A_worklog.md`](submission/A_worklog.md) |
+| B. Methodology | [`submission/B_methodology.md`](submission/B_methodology.md) | 
+| C. 50 test cases | [`submission/C_test_cases.xlsx`](submission/C_test_cases.xlsx) · [`.md`](submission/C_test_cases.md) |
 | D. Evaluation report | [`submission/D_evaluation.md`](submission/D_evaluation.md) | Results by metric and scenario, best and worst examples, judge reliability, charts |
-| E. Defects and next steps | [`submission/E_defects.md`](submission/E_defects.md) | Defects found with root cause, fix and before/after; what remains to fine-tune; next steps for production |
-| Bonus: architecture | [`submission/architecture.md`](submission/architecture.md) | Deployment, pipeline and evaluation loop diagrams |
+| E. Defects and next steps | [`submission/E_defects.md`](submission/E_defects.md) | 
+| Bonus: architecture | [`submission/architecture.md`](submission/architecture.md) | 
 
 | | |
 |---|---|
-| Live demo | https://olvene-copilot-83224434541.us-central1.run.app — pick a test case at the top left, then 生成 3 条话术 (about 40 s). If it does not open from mainland China, please see the recording |
-| Recording | [`submission/assets/demo.mp4`](submission/assets/demo.mp4): loading a test case, generating three candidates, choosing one and regenerating in the live demo (28 s; part of each generation wait is cut and the rest plays at 4×, other parts at 1.5–3×) |
+| Live demo | https://olvene-copilot-83224434541.us-central1.run.app — pick a test case at the top left, then 生成 3 条话术 |
+| Recording | [`submission/assets/demo.mp4`](submission/assets/demo.mp4): loading a test case, generating three candidates, choosing one and regenerating in the live demo |
 | Brand assumptions | [`brand/brand_guide.md`](brand/brand_guide.md) (voice, red lines, scenario playbooks), [`brand/catalog.yaml`](brand/catalog.yaml) (products, services, events) |
 | Test set | [`eval/cases/cases.yaml`](eval/cases/cases.yaml) and the rendered WeChat screenshots in [`eval/cases/screenshots/`](eval/cases/screenshots/) |
 | Raw results | [`eval/results/final.jsonl`](eval/results/final.jsonl): every flag, score, judge comment and latency |

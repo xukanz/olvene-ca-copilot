@@ -127,6 +127,8 @@ def load_case(cid: str) -> None:
             "shots": [str(p) for p in screenshot_paths(cid)] if c.get("screenshot") else [],
             "analysis": None,
             "result": None,
+            "shot_open": False,
+            "shot_idx": 0,
         }
     )
     ss.pop("dialog_editor", None)
@@ -173,6 +175,43 @@ def build_request(with_dialog: bool = True) -> GenerateRequest:
         product_ids=ss.product_ids,
         event_id=None if ss.event_id == "（无）" else ss.event_id,
         context={"today": ss.today.isoformat(), "occasion": ss.occasion or None, "ca_name": ss.ca_name or None},
+    )
+
+
+def _shot_bytes(shot: str) -> bytes:
+    """A screenshot reference (data URI or local path) as raw bytes."""
+    if shot.startswith("data:"):
+        return base64.b64decode(shot.split(",", 1)[1])
+    return Path(shot).read_bytes()
+
+
+def _shot_data_uri(shot: str) -> str:
+    if shot.startswith("data:"):
+        return shot
+    return "data:image/png;base64," + base64.b64encode(Path(shot).read_bytes()).decode()
+
+
+def _close_shot() -> None:
+    ss.shot_open = False
+
+
+@st.dialog("聊天截图", width="medium", on_dismiss=_close_shot)
+def show_shot() -> None:
+    """Original-resolution viewer, centred and fitted to the window; ◀ ▶ to move between screenshots.
+    Open/closed is kept in session state (closed by on_dismiss), so switching never closes it."""
+    n = len(ss.shots)
+    i = ss.get("shot_idx", 0) % n
+    if n > 1:
+        prev, label, nxt = st.columns([1, 2, 1], vertical_alignment="center")
+        if prev.button("◀", key="shot_prev", width="stretch"):
+            i = ss.shot_idx = (i - 1) % n
+        if nxt.button("▶", key="shot_next", width="stretch"):
+            i = ss.shot_idx = (i + 1) % n
+        label.markdown(f"<div style='text-align:center'>{i + 1} / {n}</div>", unsafe_allow_html=True)
+    st.html(
+        f'<img src="{_shot_data_uri(ss.shots[i])}" '
+        'style="display:block;margin:0 auto;max-width:100%;max-height:75vh;width:auto;height:auto;'
+        'border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.15)">'
     )
 
 
@@ -235,7 +274,28 @@ with mid:
     if ups:
         ss.shots = ["data:%s;base64,%s" % (u.type, base64.b64encode(u.getvalue()).decode()) for u in ups]
     if ss.shots:
-        st.image([s if not s.startswith("data:") else base64.b64decode(s.split(",", 1)[1]) for s in ss.shots], width=150)
+        # Thumbnails are downscaled to 150 px, so Streamlit's own fullscreen view is small and blurry.
+        # Replace it with our own expand icon in the same place (top right, on hover), which opens
+        # the original image in a centred viewer that can step through all screenshots.
+        st.html("""<style>
+          .st-key-shot_thumbs [data-testid='stElementToolbar'],
+          .st-key-shot_thumbs [data-testid='StyledFullScreenButton']{display:none !important}
+          [class*='st-key-thumb_']{position:relative; width:150px !important}
+          [class*='st-key-view_shot_']{position:absolute; top:6px; right:6px; width:auto !important;
+                                       z-index:5; opacity:0; transition:opacity .15s}
+          [class*='st-key-thumb_']:hover [class*='st-key-view_shot_']{opacity:1}
+          [class*='st-key-view_shot_'] button{min-height:0; padding:2px 6px; border-radius:6px;
+                                              background:rgba(255,255,255,.92)}
+        </style>""")
+        with st.container(key="shot_thumbs"):
+            cols = st.columns(min(len(ss.shots), 4))
+            for i, shot in enumerate(ss.shots):
+                with cols[i % len(cols)], st.container(key=f"thumb_{i}"):
+                    st.image(_shot_bytes(shot), width=150)
+                    if st.button("", key=f"view_shot_{i}", icon=":material/fullscreen:"):
+                        ss.shot_idx, ss.shot_open = i, True
+        if ss.get("shot_open"):
+            show_shot()
         if st.button("解析截图 →", type="secondary"):
             req = build_request(with_dialog=False)
             req.dialog_screenshots = ss.shots
