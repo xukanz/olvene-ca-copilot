@@ -9,6 +9,7 @@ import base64
 import json
 import logging
 import mimetypes
+import random
 import re
 import time
 from dataclasses import dataclass, field
@@ -109,7 +110,8 @@ class LLM:
             thinking_config=types.ThinkingConfig(thinking_level=level.upper()) if level else None,
         )
         last_err: Exception | None = None
-        for attempt in range(3):
+        attempts = 6
+        for attempt in range(attempts):
             t0 = time.time()
             try:
                 resp = self.client.models.generate_content(
@@ -133,7 +135,11 @@ class LLM:
             except Exception as e:  # noqa: BLE001 — retry transient + malformed JSON
                 last_err = e
                 log.warning("LLM %s attempt %d failed: %s", task, attempt + 1, e)
-                time.sleep(1.5 * (attempt + 1))
+                if attempt == attempts - 1:
+                    break
+                # 429 / quota: exponential backoff with jitter; other errors: short retry.
+                rate_limited = "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e)
+                time.sleep((min(60, 4 * 2**attempt) if rate_limited else 1.5 * (attempt + 1)) + random.random())
         raise RuntimeError(f"LLM task {task} failed after retries: {last_err}")
 
 
