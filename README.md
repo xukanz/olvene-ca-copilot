@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/b1bd5707-230b-4cea-80a8-1e949c4d28b4
+
 # Olvène CA Copilot
 
 An AI tool that drafts three on-brand Chinese WeChat messages (话术) for luxury Client Advisors (CAs), across six scenarios: birthday and festive greetings, product recommendation, post-purchase care, reactivation, event invitation, and price objection. The CA picks one, edits it if needed, and sends it; the tool never sends anything.
