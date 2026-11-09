@@ -5,6 +5,12 @@ An AI tool that drafts three on-brand Chinese WeChat messages (话术) for luxur
 > Applied AI Engineer written challenge · submitted 2026-11-09.
 > The brand **Maison Olvène 欧薇恩** and all products, boutiques, events and clients in this repository are fictional.
 
+## Demo
+
+[![Demo: load a test case, generate three candidates, pick one, regenerate](submission/assets/demo.gif)](submission/assets/demo.mp4)
+
+28-second recording of the live app ([MP4](submission/assets/demo.mp4)): load test case S1-02, generate three candidate messages, choose one, then regenerate. The model's generation time is shortened: the middle of each wait is cut and the rest plays at 4×; other parts play at 1.5–3×.
+
 ## Submission
 
 | Part | File | What it contains |
@@ -19,7 +25,7 @@ An AI tool that drafts three on-brand Chinese WeChat messages (话术) for luxur
 | | |
 |---|---|
 | Live demo | https://olvene-copilot-83224434541.us-central1.run.app — pick a test case at the top left, then 生成 3 条话术 (about 40 s). If it does not open from mainland China, please see the recording |
-| Recording | [`submission/assets/demo.mp4`](submission/assets/demo.mp4): loading a test case and generating three candidates in the live demo (43 s; the generation waits are shown at 8× speed) |
+| Recording | [`submission/assets/demo.mp4`](submission/assets/demo.mp4): loading a test case, generating three candidates, choosing one and regenerating in the live demo (28 s; part of each generation wait is cut and the rest plays at 4×, other parts at 1.5–3×) |
 | Brand assumptions | [`brand/brand_guide.md`](brand/brand_guide.md) (voice, red lines, scenario playbooks), [`brand/catalog.yaml`](brand/catalog.yaml) (products, services, events) |
 | Test set | [`eval/cases/cases.yaml`](eval/cases/cases.yaml) and the rendered WeChat screenshots in [`eval/cases/screenshots/`](eval/cases/screenshots/) |
 | Raw results | [`eval/results/final.jsonl`](eval/results/final.jsonl): every flag, score, judge comment and latency |
